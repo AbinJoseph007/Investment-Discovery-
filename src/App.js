@@ -12,6 +12,7 @@ import InnovatorMessages from "./Innovator/InnovatorMessages/InnovatorMessages";
 import InnovatorHome from "./Innovator/InnovatorHome/InnovatorHome";
 import { InvestorHome } from "./Investor/InvestorHome/InvestorHome";
 import ProjectviewSkeleton from "./CommonComponents/Card Skeleton/ProjectviewSkeleton";
+import About from "./CommonComponents/Home/About";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/projectview/:id" element={<ProjectView />} />
         <Route path="/allProjects" element={<InvestorProjects />}></Route>
         <Route path="/profile" element={<InnovatorProfile />}></Route>
+        <Route path="/aboutus" element={<About />}></Route>
 
 
         {/* Innovator */}

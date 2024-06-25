@@ -25,5 +25,6 @@ export const endpoints = {
   GET_INNOVATOR_PROJECTS:`project/`,
   DELETE_PROJECT:`project/`,
   UPDATE_PROJECT:`update/`,
+  EDIT_PROJECT:`project/`,
   GET_NOTIFICATION:`notified/list/`
 };

@@ -35,7 +35,7 @@ function InnovatorProjects() {
   const { request: addProjects } = useApi("mPost");
   const { request: getInnovatorProjects } = useApi("hget");
   const { request: deleteInnovatorProject } = useApi("delete");
-  const { request: editInnovatorProject } = useApi("mput");
+  const { request: editInnovatorProject } = useApi("mPut"); 
 
   const [photo, setPhoto] = useState(null);
   const [projectData, setProjectData] = useState({
@@ -89,7 +89,7 @@ function InnovatorProjects() {
     setIsEditForm(false);
     setShow(true);
   };
-  // __________________________________________________________________________________________________________________________________
+
   // ADD PROJECTS
   const addProject = async () => {
     const formData = new FormData();
@@ -133,23 +133,18 @@ function InnovatorProjects() {
     }
   };
 
-  // __________________________________________________________________________________________________________________________________
-
   // HANDLE IMAGE
-
   const handleImage = (e) => {
     const file = e.target.files[0];
     setPhoto(file);
     setProjectData((prevDetails) => ({
       ...prevDetails,
-      image: file,
+      image: file,  // Ensure 'image' is set to the File object
     }));
   };
 
-  // __________________________________________________________________________________________________________________________________
 
   // ADD CATEGORY
-
   const options = cat.map((category) => ({
     value: category.id,
     label: category.c_name,
@@ -174,10 +169,7 @@ function InnovatorProjects() {
     }
   };
 
-  // __________________________________________________________________________________________________________________________________
-
   // GET INNOVATOR PROJECTS
-
   const getProjects = async () => {
     try {
       const url = `${endpoints.GET_INNOVATOR_PROJECTS}`;
@@ -191,10 +183,7 @@ function InnovatorProjects() {
     }
   };
 
-  // __________________________________________________________________________________________________________________________________
-
   // DELETE PROJECT
-
   const handleDelete = async (e, id) => {
     e.preventDefault();
     let apiResponse;
@@ -206,7 +195,6 @@ function InnovatorProjects() {
       console.log(error);
     }
   };
-  // __________________________________________________________________________________________________________________________________
 
   useEffect(() => {
     setTimeout(() => {
@@ -217,24 +205,42 @@ function InnovatorProjects() {
   }, []);
 
   const handleUpdate = async (e) => {
+    e.preventDefault();
+
     const formData = new FormData();
     formData.append("project_name", projectData.project_name);
     formData.append("description", projectData.description);
     formData.append("amount", projectData.amount);
     formData.append("end_date", projectData.end_date);
-    formData.append("image", projectData.image);
     formData.append("category", projectData.category);
-    let apiResponse;
+    if (projectData.image instanceof File) {  // Check if it's a file
+      formData.append("image", projectData.image);
+    }
 
     const url = `${endpoints.EDIT_PROJECT}${projectData.id}`;
     try {
-      const { response, error } = await editInnovatorProject(url, formData);
-      console.log(response);
-      if (!error && response) {
-        alert("Updated Successfully");
+      const result = await editInnovatorProject(url, formData);
+      if (!result.error) {
+        toast.success("Project Updated Successfully", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+
+        setShow(false);
+        getProjects();
+      } else {
+        toast.error("Failed to update project");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Failed to update project");
     }
   };
 
@@ -250,9 +256,7 @@ function InnovatorProjects() {
             variant="outline-dark rounded-0 py-3 px-4"
             className="mx-auto d-flex align-items-center"
           >
-            <span className="hidden">
-              Add a project&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
+            <span className="hidden">Add a project&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <i className="fa-solid fa-plus fa-xl"></i>
           </Button>
 
@@ -272,14 +276,8 @@ function InnovatorProjects() {
                         }}
                       ></Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={(e) => showEditForm(project)}>
-                          Edit
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={(e) => handleDelete(e, project.id)}
-                        >
-                          Delete
-                        </Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => showEditForm(project)}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => handleDelete(e, project.id)}>Delete</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                     <Card.Img
@@ -287,12 +285,8 @@ function InnovatorProjects() {
                       className="project-image rounded-0 m-0"
                     />
                     <Card.Body className="m-0">
-                      <h3 className="project-title bg-white py-3 text-center mx-auto">
-                        {project.project_name}
-                      </h3>
-                      <Card.Text style={{ textAlign: "justify" }}>
-                        {project.description.slice(0, 100) + "..."}
-                      </Card.Text>
+                      <h3 className="project-title bg-white py-3 text-center mx-auto">{project.project_name}</h3>
+                      <Card.Text style={{ textAlign: "justify" }}>{project.description.slice(0, 100) + "..."}</Card.Text>
                       <ProgressBar
                         variant="success"
                         className="striped"
@@ -304,10 +298,7 @@ function InnovatorProjects() {
                       <small>Target: ₹{project.amount}</small>
                       <div className="text-end">
                         <Link to={`/projectview/${project.id}`}>
-                          <Button
-                            variant="outline-dark rounded-0"
-                            className="ms-auto"
-                          >
+                          <Button variant="outline-dark rounded-0 ms-auto">
                             <i className="fa-solid fa-arrow-right"></i>
                           </Button>
                         </Link>
@@ -318,7 +309,6 @@ function InnovatorProjects() {
               ))
             ) : (
               <div className="text-danger text-center mt-5">
-                {" "}
                 <p>
                   <b>No Projects Added Yet ...!</b>
                 </p>
@@ -329,33 +319,17 @@ function InnovatorProjects() {
       </div>
 
       {/* Add project modal */}
-      <Modal
-        show={show}
-        onHide={() => setShow(false)}
-        dialogClassName="modal-addproject"
-        centered
-        size="lg"
-      >
+      <Modal show={show} onHide={() => setShow(false)} dialogClassName="modal-addproject" centered size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>
-            {isEditForm ? "Edit Project" : "Add a new project"}
-          </Modal.Title>
+          <Modal.Title>{isEditForm ? "Edit Project" : "Add a new project"}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="px-lg-5">
           <div>
             <div className="text-center w-100">
               <label style={{ cursor: "pointer" }}>
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  onChange={handleImage}
-                />
+                <input type="file" style={{ display: "none" }} onChange={handleImage} />
                 <img
-                  src={
-                    photo
-                      ? URL.createObjectURL(photo)
-                      : `http://127.0.0.1:8000/${projectData.image}`
-                  }
+                  src={photo ? URL.createObjectURL(photo) : `http://127.0.0.1:8000/${projectData.image}`}
                   alt="Cover Image Upload"
                   height={200}
                   className="border border-black p-3"
@@ -363,29 +337,18 @@ function InnovatorProjects() {
                 />
                 <p>Cover image (png / jpg)</p>
               </label>
+
             </div>
             <FloatingLabel label="Project name" className="mb-3">
-              {isEditForm ? (
-                <Form.Control
-                  name="project_name"
-                  value={projectData.project_name}
-                  type="text"
-                  placeholder="Project name"
-                  maxLength={35}
-                  className="border-black"
-                  onChange={handleInput}
-                />
-              ) : (
-                <Form.Control
-                  name="project_name"
-                  value={projectData.project_name}
-                  type="text"
-                  placeholder="Project name"
-                  maxLength={35}
-                  className="border-black"
-                  onChange={handleInput}
-                />
-              )}
+              <Form.Control
+                name="project_name"
+                value={projectData.project_name}
+                type="text"
+                placeholder="Project name"
+                maxLength={35}
+                className="border-black"
+                onChange={handleInput}
+              />
             </FloatingLabel>
             <FloatingLabel label="Description" className="mb-3">
               <Form.Control
@@ -428,29 +391,16 @@ function InnovatorProjects() {
               </Col>
             </Row>
 
-            {isEditForm ? (
-              <CreatableSelect
-                options={options}
-                onChange={handleCategoryChange}
-                onInputChange={(newValue, actionMeta) => {
-                  if (actionMeta.action === "input-change") {
-                    setInputValue(newValue);
-                  }
-                }}
-                placeholder="Select or create category"
-              />
-            ) : (
-              <CreatableSelect
-                options={options}
-                onChange={handleCategoryChange}
-                onInputChange={(newValue, actionMeta) => {
-                  if (actionMeta.action === "input-change") {
-                    setInputValue(newValue);
-                  }
-                }}
-                placeholder="Select or create category"
-              />
-            )}
+            <CreatableSelect
+              options={options}
+              onChange={handleCategoryChange}
+              onInputChange={(newValue, actionMeta) => {
+                if (actionMeta.action === "input-change") {
+                  setInputValue(newValue);
+                }
+              }}
+              placeholder="Select or create category"
+            />
           </div>
           <hr />
         </Modal.Body>
