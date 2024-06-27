@@ -44,11 +44,17 @@ function InvestorProjectView() {
       <div className='sticky-top'><Header navObj={navObj} /></div>
 
       <div className='main-div'>
-        <div className='text-start'>
+        <div>
+        <div className='d-flex justify-content-between'>
+          <Link to={'/investor/home'}>
+            <Button variant="outline-dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
+          </Link>
           <Link to={'/investor/home'}>
             <Button variant="outline-dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
           </Link>
         </div>
+        </div>
+
         <div className="main-div">
           <Container fluid={"sm"} className="p-3">
             <Row >
