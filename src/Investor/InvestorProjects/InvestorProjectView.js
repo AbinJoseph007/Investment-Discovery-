@@ -9,6 +9,7 @@ import Footer from '../../CommonComponents/Footer/Footer';
 import Header from '../../CommonComponents/Header/Header';
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
+import { AiFillMessage } from "react-icons/ai";
 
 function InvestorProjectView() {
 
@@ -38,25 +39,25 @@ function InvestorProjectView() {
 
 
 
-  const navObj = [{ text: 'Home', link: '/' }, { text: 'Projects', link: '/innovator/projects' }, { text: 'Messages', link: '' }]
+  const navObj = [{ text: 'Home', link: '/' }, { text: 'Projects', link: '/investor/project' }, { text: 'Messages', link: '/innovator/messages' }]
   return (
     <>
       <div className='sticky-top'><Header navObj={navObj} /></div>
 
       <div className='main-div'>
         <div>
-        <div className='d-flex justify-content-between'>
-          <Link to={'/investor/home'}>
-            <Button variant="outline-dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
-          </Link>
-          <Link to={'/investor/home'}>
-            <Button variant="outline-dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
-          </Link>
-        </div>
+          <div className='d-flex justify-content-between'>
+            <Link to={'/investor/home'}>
+              <Button variant="dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
+            </Link>
+            <Link to={'/innovator/messages'}>
+              <AiFillMessage className='fs-1 mt-2 ' color='black' />
+            </Link>
+          </div>
         </div>
 
         <div className="main-div">
-          <Container fluid={"sm"} className="p-3">
+          <Container fluid={"sm"} className="">
             <Row >
               <Col>
                 <img
@@ -89,19 +90,20 @@ function InvestorProjectView() {
                           style={{ height: "30px" }}
                           data-bs-theme="dark"
                         />
-
-                      
                       </div>
 
-                      <p className='mt-5 px-3'>Deadline: {project.end_date || "N/A"}</p>
+                      <p className='mt-2 px-3'>Deadline: {project.end_date || "N/A"}</p>
 
-                     
+
                     </Card.Text>
 
                   </Card.Body>
                 </Card>
               </Col>
             </Row>
+            <div className='text-center'>
+                        <button className='btn btn-dark mt-2'>Make Investment</button>
+            </div>
           </Container>
         </div>
       </div>
