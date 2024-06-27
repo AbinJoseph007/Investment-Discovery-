@@ -51,7 +51,7 @@ function InnovatorProfile() {
               alt=""
             />
                 <Link
-                  to={"/innovator/profile-edit"}
+                  to={"/profile-edit"}
                   style={{ textDecoration: "none" }}
                 >
                 <div className="text-center">

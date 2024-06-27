@@ -27,7 +27,7 @@ function App() {
 
 
         {/* Innovator */}
-        <Route path="/innovator/profile-edit" element={<InnovatorProfileEdit />}></Route>
+        <Route path="/profile-edit" element={<InnovatorProfileEdit />}></Route>
         <Route path="/innovator/projects" element={<InnovatorProjects />}></Route>
         <Route path="/innovator/messages" element={<InnovatorMessages />}></Route>
         <Route path="/innovator/home" element={<InnovatorHome />}></Route>
@@ -35,7 +35,7 @@ function App() {
         {/* Investor */}
         <Route path="/investor/home" element={<InvestorHome/>}></Route>
         <Route path="/investor/project" element={<InvestorProjects/>}></Route>
-        <Route path="/investor/project/id" element={<InvestorProjectView />}></Route>
+        <Route path="/investor/project/:id" element={<InvestorProjectView />}></Route>
         <Route path="/abcd" element={<ProjectviewSkeleton/>}></Route>
       </Routes>
     </>
