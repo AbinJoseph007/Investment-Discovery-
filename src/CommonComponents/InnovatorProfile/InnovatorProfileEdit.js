@@ -12,10 +12,10 @@ function InnovatorProfileEdit() {
   const navigate = useNavigate();
   const { request: profileView } = useApi("hget");
   const { request: editprofile } = useApi("mPut");
-  const { request: editUserprofile } = useApi("Put");
+
   const [profile, setProfile] = useState({});
   const [photo, setPhoto] = useState(null);
-  const [changePhoto,setChangePhoto] = useState(false)
+
   console.log(photo);
   console.log(profile);
   // get profile

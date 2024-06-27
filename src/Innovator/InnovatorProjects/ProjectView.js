@@ -41,6 +41,7 @@ function ProjectView() {
       const { response, error } = apiResponse;
       if (!error && response) {
         setProject(response.data[0]);
+        console.log(response.data[0]);
       }
     } catch (error) {
       console.error("Failed to fetch project", error);
