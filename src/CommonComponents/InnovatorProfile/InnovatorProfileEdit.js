@@ -12,8 +12,10 @@ function InnovatorProfileEdit() {
   const navigate = useNavigate();
   const { request: profileView } = useApi("hget");
   const { request: editprofile } = useApi("mPut");
+
   const [profile, setProfile] = useState({});
   const [photo, setPhoto] = useState(null);
+
   console.log(photo);
   console.log(profile);
   // get profile
@@ -47,12 +49,16 @@ function InnovatorProfileEdit() {
     const file = e.target.files[0];
 
     if (file) {
+      setChangePhoto(true)
       const imageUrl = URL.createObjectURL(file);
       setPhoto(imageUrl);
       setProfile((prevState) => ({
         ...prevState,
         profile_pic: file,
       }));
+    }
+    else{
+      setPhoto(null)
     }
   };
 
@@ -72,42 +78,44 @@ function InnovatorProfileEdit() {
     formData.append("linkedin", profile.linkedin);
     formData.append("web", profile.web);
     formData.append("Location", profile.Location);
-    formData.append("profile_pic", profile.profile_pic);
+    if (profile.profile_pic instanceof File) {  // Check if it's a file
+      formData.append("profile_pic", profile.profile_pic);
+    }
+    // formData.append("profile_pic", profile.profile_pic);
   
     try {
       const url = `${endpoints.EDIT_PROFILE}`;
-      apiResponse = await editprofile(url, formData);
-      const { response, error } = apiResponse;
-  
-      if (!error && response) {
-        toast.success("Your Profile Updated", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        setTimeout(() => {
-          navigate("/profile");
-        }, 2000);
-      } else {
-        toast.error("Something went wrong..!", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-  
+
+        apiResponse = await editprofile(url, formData);
+        const { response, error } = apiResponse;  
+        if (!error && response) {
+          toast.success("Your Profile Updated", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          setTimeout(() => {
+            navigate("/profile");
+          }, 2000);
+        } else {
+          toast.error("Something went wrong..!", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        }
       console.log(apiResponse);
     } catch (error) {
       toast.error("An error occurred while updating your profile.", {
