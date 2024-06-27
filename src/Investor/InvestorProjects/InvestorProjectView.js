@@ -63,14 +63,14 @@ function InvestorProjectView() {
                   className="img-fluid mb-3"
                   src={`http://127.0.0.1:8000/${project.image}`}
                   alt=""
-                  style={{ height: "400px" }}
+                  style={{ height: "400px", borderRadius:"10px"  }}
                 />
               </Col>
               <Col className=''>
                 <Card className=' px-2 shadow' style={{ width: '100%', height: "400px" }}>
 
                   <Card.Body>
-                    <Card.Title className='fs-3 text-center'>{project.project_name}</Card.Title>
+                    <Card.Title className='fs-3 fw-bold text-center'>{project.project_name}</Card.Title>
                     <Card.Text>
                       <div style={{ textAlign: "justify" }} className='mt-4 px-3'>
                         {project.description}
