@@ -77,7 +77,7 @@ export const InvestorHome = () => {
                     />
                     <small>Target: ₹{project.amount}</small>
                     <div className="text-end">
-                      <Link to={`/projectview/${project.id}`}>
+                      <Link to={`/investor/project/${project.id}`}>
                         <Button
                           variant="outline-dark rounded-0"
                           className="ms-auto "
