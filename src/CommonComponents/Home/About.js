@@ -7,7 +7,7 @@ import Header from "../Header/Header";
 function About() {
   return (
    <>
-      <Header/>
+      {/* <Header/> */}
       <div className="aboutUs-body pt-5 pb-5 mb-5">
         <Container>
           <h5 className="mb-4">. about us</h5>

@@ -13,6 +13,7 @@ const useApi = (type) => {
     let response;
     const api = authToken ? axiosInstances.authInstance() : axiosInstances.baseInstance();
     const mApi = axiosInstances.MauthInstance();
+    
     try {
       if (type === "post") {
         response = await api.post(url, payload, header);

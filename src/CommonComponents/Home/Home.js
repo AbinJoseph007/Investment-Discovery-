@@ -21,7 +21,7 @@ function Home() {
       { text: "About Us", link: "/aboutUs" },
     ];
 
-    return <Header navObj={navObj} />;
+    return <Header navObj={navObj}  />;
   };
 
 
@@ -29,7 +29,7 @@ function Home() {
 
   return (
     <>
-      <div>{fetchNavObj()}</div>
+      <div className="sticky-top">{fetchNavObj()}</div>
       <Container fluid>
         <Row className="">
           <Col lg={6} className="p-5">

@@ -50,8 +50,24 @@ function InnovatorProfile() {
               }
               alt=""
             />
+                <Link
+                  to={"/innovator/profile-edit"}
+                  style={{ textDecoration: "none" }}
+                >
+                <div className="text-center">
+
+                <div className="mb-6 ">
+
+                  <i  class="fa-solid fa-pen text-dark "></i>
+                </div>
+                </div>
+                  
+                </Link>
+             
           </div>{" "}
+         
         </Col>
+        
         <Col lg={8} className="details">
           <Row className="">
             <Col lg={9} className="">
@@ -62,7 +78,7 @@ function InnovatorProfile() {
                 {profile?.designation ? profile?.designation : "Designation"}
               </h5>
               <p>
-                <i class="fa-solid fa-location-dot"></i> Kochi, Kerala
+                <i class="fa-solid fa-location-dot"></i> {profile?.Location}
               </p>
             </Col>
             <Col lg={3} className="align-item-center justify-content-center ">
@@ -83,7 +99,7 @@ function InnovatorProfile() {
                   <i class="fa-solid fa-link ms-4"></i>
                 </a>
               </div>
-              <div className="text-center mt-4 d-flex">
+              {/* <div className="text-center mt-4 d-flex">
                 <Link
                   to={"/innovator/profile-edit"}
                   style={{ textDecoration: "none" }}
@@ -92,7 +108,7 @@ function InnovatorProfile() {
                     <b>Edit Profile</b>
                   </button>
                 </Link>
-              </div>
+              </div> */}
             </Col>
           </Row>
         </Col>
@@ -129,7 +145,7 @@ function InnovatorProfile() {
               Email :<b>{profile?.email}</b>
             </p>
             <p>
-              Address : <b>123, abcd Street, Kochi - 682001, Kerala, India.</b>
+              Address : <b>{profile?.address}</b>
             </p>
           </Col>
           <Col>
@@ -137,10 +153,10 @@ function InnovatorProfile() {
               <h3>Basic Details{"   "}</h3>
             </span>
             <p>
-              Date Of Birth :<b> 18/09/2002 </b>
+              Date Of Birth :<b> {profile?.dob} </b>
             </p>
             <p>
-              Gender :<b> Female</b>
+              Gender :<b> {profile?.gender}</b>
             </p>
           </Col>
         </Row>

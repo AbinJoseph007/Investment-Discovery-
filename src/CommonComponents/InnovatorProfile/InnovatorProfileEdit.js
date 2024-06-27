@@ -62,6 +62,10 @@ function InnovatorProfileEdit() {
     formData.append("full_name", profile.full_name);
     formData.append("mobile", profile.mobile);
     formData.append("country", profile.country);
+    formData.append("address", profile.address);
+    formData.append("gender", profile.gender);
+    formData.append("dob", profile.dob);
+    formData.append("instagram", profile.instagram);
     formData.append("designation", profile.designation);
     formData.append("proff_bio", profile.proff_bio);
     formData.append("twitter", profile.twitter);
@@ -267,7 +271,7 @@ function InnovatorProfileEdit() {
           <Col>
             <input
              name="instagram"
-             value={profile?.instagram}
+             value={profile?.instagram ||""}
              onChange={handleInputChange}
               type="text"
               className="input-field mt-2 w-100"
