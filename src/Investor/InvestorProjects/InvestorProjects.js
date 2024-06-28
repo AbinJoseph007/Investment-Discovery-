@@ -22,6 +22,8 @@ import Header from "../../CommonComponents/Header/Header";
 function InvestorProjects() {
   const { request: getProjects } = useApi("get");
   const [allProject, setAllProject] = useState([]);
+  const [search, setSearch] = useState("")
+  const [filterList,setFilterList] = useState([])
 
   const getAllProjects = async () => {
     try {
@@ -38,10 +40,27 @@ function InvestorProjects() {
     }
   };
 
+  const handleSearch=()=>{
+
+console.log("search");
+    if(search=== ''){
+      setFilterList(allProject)
+      
+    }
+    else{
+      const filtered = allProject.filter((project)=>project.project_name.toLowerCase().includes(search.toLowerCase()))
+      setFilterList(filtered)
+    }
+  }
+  
 
   useEffect(() => {
     getAllProjects();
   }, []);
+
+  useEffect(()=>{
+    handleSearch()
+  },[search,allProject])
 
   return (
     <>
@@ -54,16 +73,19 @@ function InvestorProjects() {
             <Form.Control
               className="border border-black"
               placeholder="Search..."
+              value={search}
+              onChange={(e)=>setSearch(e.target.value)}
             />
             <InputGroup.Text className="border border-black">
               {" "}
-              <i className="fa-solid fa-search"></i>
+              <i className="fa-solid fa-search" onClick={handleSearch}/>
             </InputGroup.Text>
           </InputGroup>
 
+
           <Row>
-            {allProject.length > 0
-              ? allProject.map((project, index) => (
+            {filterList.length > 0
+              ? filterList.map((project, index) => (
                   <Col lg={4} sm={6} className="p-3" key={index}>
                     <Card className="rounded-0 border-0 text-black grey-card">
                       <Card.Img
