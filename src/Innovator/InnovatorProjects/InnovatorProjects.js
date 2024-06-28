@@ -103,6 +103,7 @@ function InnovatorProjects() {
     try {
       const url = `${endpoints.ADD_PROJECT}`;
       const { response, error } = await addProjects(url, formData);
+      console.log(response, error);
       if (!error && response) {
         toast.success("Project Added Successfully", {
           position: "bottom-center",

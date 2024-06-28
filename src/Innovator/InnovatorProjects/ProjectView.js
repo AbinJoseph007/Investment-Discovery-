@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  Col,
   Container,
   ListGroup,
   Modal,
   ProgressBar,
+  Row,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { endpoints } from "../../services/defaults";
@@ -59,15 +61,15 @@ function ProjectView() {
 
   console.log(updateInput);
 
-  if (!project) return <div><CardSkeleton/></div>;
+  if (!project) return <div><CardSkeleton /></div>;
 
-  const handleUpdate=async(e)=>{
+  const handleUpdate = async (e) => {
     try {
       const url = `${endpoints.UPDATE_PROJECT}${id}`;
       const payload = {
-        update_message:updateInput.update_message
+        update_message: updateInput.update_message
       };
-      const apiResponse = await UpdateProject(url,payload);
+      const apiResponse = await UpdateProject(url, payload);
       console.log(apiResponse);
       const { response, error } = apiResponse;
       if (!error && response) {
@@ -82,7 +84,7 @@ function ProjectView() {
           progress: undefined,
           theme: "dark",
           transition: Bounce,
-          });
+        });
       }
     } catch (error) {
       console.error("Failed to fetch project", error);
@@ -100,40 +102,58 @@ function ProjectView() {
             {" "}
             <Button onClick={handleShow}>Add Updations</Button>
           </div>
-
-          <img
-            className="img-fluid mb-3"
-            src={`http://127.0.0.1:8000/${project.image}`}
-            alt=""
-            style={{ height: "400px" }}
-          />
           <h1>{project.project_name}</h1>
-          <p style={{ textAlign: "justify" }} className="mb-5">
-            {project.description}
-          </p>
-          <div className="w-75 mx-auto my-2">
-            <h3>Amount raised</h3>
-            <ProgressBar
-              variant="success"
-              className="striped"
-              now={(project.amount / project.amount) * 100}
-              label={`₹${project.amount}`}
-              title={`₹${project.amount} / ₹${project.targetAmount}`}
-              style={{ height: "30px" }}
-              data-bs-theme="dark"
-            />
-             <ListGroup className='w-75 mx-auto fw-bold  mb-5'>
-            {project.investors?.map((i, index) =>
-              <ListGroup.Item className='bg-transparent d-flex justify-content-evenly' key={index}>{i.name} <span className='vr mx-4'></span> ₹{i.amount}</ListGroup.Item>)}
 
-          </ListGroup>
-            <div className="d-flex justify-content-between mb-3">
-              <p>Deadline: {project.end_date || "N/A"}</p>
-              <p>
-                Target Amount: <b>₹{project.amount}</b>
-              </p>
+          <div className="row shadow">
+
+            <div className="col p-1">
+              <img
+                className="img-fluid mb-3"
+                src={`http://127.0.0.1:8000/${project.image}`}
+                alt=""
+                style={{ height: "400px" }}
+              />
+            </div>
+            <div className="col">
+              <div className="container mt-5 px-4">
+                <p style={{ textAlign: "justify" }} className="mb-5">
+                  {project.description}
+                </p>
+              </div>
+              <div className="w-75 mx-auto my-2">
+                <h3>Amount raised</h3>
+                <ProgressBar
+                  variant="success"
+                  className="striped"
+                  now={(project.amount / project.amount) * 100}
+                  label={`₹${project.amount}`}
+                  title={`₹${project.amount} / ₹${project.targetAmount}`}
+                  style={{ height: "30px" }}
+                  data-bs-theme="dark"
+                />
+                <ListGroup className='w-75 mx-auto fw-bold  mb-5'>
+                  {project.investors?.map((i, index) =>
+                    <ListGroup.Item className='bg-transparent d-flex justify-content-evenly' key={index}>{i.name} <span className='vr mx-4'></span> ₹{i.amount}</ListGroup.Item>)}
+
+                </ListGroup>
+                <div className="d-flex justify-content-between mb-3">
+                  <p>Deadline: {project.end_date || "N/A"}</p>
+                
+                </div>
+              </div>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
         </Container>
       </div>
 
@@ -148,7 +168,7 @@ function ProjectView() {
         </Modal.Header>
         <Modal.Body>
           <input
-          className="input-field"
+            className="input-field"
             type="text"
             placeholder="Message"
             name="update_message"
@@ -160,10 +180,10 @@ function ProjectView() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e)=>handleUpdate(e)}>Save</Button>
+          <Button variant="primary" onClick={(e) => handleUpdate(e)}>Save</Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
