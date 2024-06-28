@@ -9,10 +9,14 @@ import Footer from '../../CommonComponents/Footer/Footer';
 import Header from '../../CommonComponents/Header/Header';
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
+import { GiPayMoney } from "react-icons/gi";
 import { AiFillMessage } from "react-icons/ai";
-
+import Modal from 'react-bootstrap/Modal';
 function InvestorProjectView() {
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [project, setProject] = useState('')
   const { id } = useParams();
   const { request: projectview } = useApi("get");
@@ -64,7 +68,7 @@ function InvestorProjectView() {
                   className="img-fluid mb-3"
                   src={`http://127.0.0.1:8000/${project.image}`}
                   alt=""
-                  style={{ height: "400px", borderRadius:"10px"  }}
+                  style={{ height: "400px", borderRadius: "10px" }}
                 />
               </Col>
               <Col className=''>
@@ -102,8 +106,34 @@ function InvestorProjectView() {
               </Col>
             </Row>
             <div className='text-center'>
-                        <button className='btn btn-dark mt-2'>Make Investment</button>
+              <button className='btn btn-outline-secondary mt-2' onClick={handleShow}>Make Investment<GiPayMoney className='fs-4' /></button>
             </div>
+
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Payment Details</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+              <input
+          className="form-control mb-3"
+            type="text"
+            placeholder="Message"
+            name="update_message"
+            
+          />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary">Pay</Button>
+              </Modal.Footer>
+            </Modal>
           </Container>
         </div>
       </div>
