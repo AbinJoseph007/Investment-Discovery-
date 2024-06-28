@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Container, ProgressBar, Row } from "react-bootstrap";
+import { Button, Card, Col,  InputGroup,Form, Container, ProgressBar, Row } from "react-bootstrap";
 import CardSkeleton from "../../CommonComponents/Card Skeleton/CardSkeleton";
 import useApi from "../../hooks/useApi";
 import { endpoints } from "../../services/defaults";
@@ -13,7 +13,8 @@ export const InvestorHome = () => {
   const [projects, setProject] = useState([]);
   const { request: getProjects } = useApi("get");
   const [loading, setLoading] = useState(true);
-
+  const [search, setSearch] = useState("")
+  const [filterList,setFilterList] = useState([])
   const navObj = [
     { text: "Home", link: "/" },
     { text: "My Projects", link: "/investor/projects" },
@@ -36,11 +37,29 @@ export const InvestorHome = () => {
     }
   };
 
+  const handleSearch=()=>{
+
+    console.log("search");
+        if(search=== ''){
+          setFilterList(projects)
+          
+        }
+        else{
+          const filtered = projects.filter((project)=>project.project_name.toLowerCase().includes(search.toLowerCase()))
+          setFilterList(filtered)
+        }
+      }
+
+
   useEffect(() => {
     setTimeout(() => {
       getAllProjects();
     }, 2000);
   }, []);
+
+  useEffect(()=>{
+    handleSearch()
+  },[search,projects])
 
   return (
     <div>
@@ -50,10 +69,22 @@ export const InvestorHome = () => {
         <CardSkeleton />
       ) : (
         <div>
-          <Container>
+          <Container className="p-lg-5 p-2">
+          <InputGroup size="lg" className="mb-3 w-75 mx-auto">
+            <Form.Control
+              className="border border-black"
+              placeholder="Search..."
+              value={search}
+              onChange={(e)=>setSearch(e.target.value)}
+            />
+            <InputGroup.Text className="border border-black">
+              {" "}
+              <i className="fa-solid fa-search" onClick={handleSearch}/>
+            </InputGroup.Text>
+          </InputGroup>
             <Row>
-              {projects && projects.length > 0 ? (
-                projects.map((project, index) =>  <Col lg={4} sm={6} className="p-3" key={index}>
+              {filterList && filterList.length > 0 ? (
+                filterList.map((project, index) =>  <Col lg={4} sm={6} className="p-3" key={index}>
                 <Card className="rounded-0 border-0 text-black grey-card">
                 
                   <Card.Img
