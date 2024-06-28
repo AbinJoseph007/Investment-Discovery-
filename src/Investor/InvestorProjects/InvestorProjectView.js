@@ -12,6 +12,7 @@ import useApi from "../../hooks/useApi";
 import { GiPayMoney } from "react-icons/gi";
 import { AiFillMessage } from "react-icons/ai";
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2'
 function InvestorProjectView() {
 
   const [show, setShow] = useState(false);
@@ -20,6 +21,19 @@ function InvestorProjectView() {
   const [project, setProject] = useState('')
   const { id } = useParams();
   const { request: projectview } = useApi("get");
+
+// payment
+const payment= async()=>{
+  Swal.fire({
+    imageUrl: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
+    imageHeight: 300,
+    imageAlt: "Payment Successfull",
+  });
+setShow(false)
+} 
+
+
+
 
   const getSingleProject = async () => {
     try {
@@ -119,19 +133,40 @@ function InvestorProjectView() {
                 <Modal.Title>Payment Details</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-              <input
-          className="form-control mb-3"
-            type="text"
-            placeholder="Message"
-            name="update_message"
-            
-          />
+                <input
+                  className="form-control mb-3"
+                  type="text"
+                  placeholder="Full Name"
+                  name="update_message"
+
+                />
+                <input
+                  className="form-control mb-3"
+                  type="text"
+                  placeholder="Account Number"
+                  name="update_message"
+
+                />
+                <input
+                  className="form-control mb-3"
+                  type="text"
+                  placeholder="Mobile Number"
+                  name="update_message"
+
+                />
+                <input
+                  className="form-control mb-3"
+                  type="text"
+                  placeholder="Amount"
+                  name="update_message"
+
+                />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="primary">Pay</Button>
+                <Button variant="success" onClick={payment}>Pay</Button>
               </Modal.Footer>
             </Modal>
           </Container>
