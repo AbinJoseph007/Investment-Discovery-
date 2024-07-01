@@ -53,9 +53,13 @@
     align-items:end ;
  }
  .msg-outer-box.sent .msg-box{
-    background-color: #212529 ;
-    color: white;
+    background-color: #68af7e ;
+    color: rgb(7, 5, 5);
  }
+ .msg-outer-box.received .msg-box{
+   background-color: #e3eee6 ;
+   color: rgb(7, 5, 5);
+}
  .msg-box{
     max-width: 80%;
  }

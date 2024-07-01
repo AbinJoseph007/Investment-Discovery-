@@ -49,7 +49,7 @@ function InnovatorProfileEdit() {
     const file = e.target.files[0];
 
     if (file) {
-      setChangePhoto(true)
+
       const imageUrl = URL.createObjectURL(file);
       setPhoto(imageUrl);
       setProfile((prevState) => ({
