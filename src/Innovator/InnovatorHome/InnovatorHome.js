@@ -61,7 +61,7 @@ function InnovatorHome() {
 
   const fetchAsideItems = () => {
     const asideObj = [
-      { text: "Dashboard", link: "/", icon: "th-large" },
+      { text: "Home", link: "/", icon: "th-large" },
 
       { text: "My Projects", link: "/innovator/projects", icon: "columns" },
       { text: "Messages", link: "/innovator/messages", icon: "envelope" }

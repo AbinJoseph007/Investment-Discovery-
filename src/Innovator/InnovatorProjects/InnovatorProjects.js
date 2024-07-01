@@ -52,7 +52,7 @@ function InnovatorProjects() {
   console.log(projectData);
 
   const navObj = [
-    { text: "Home", link: "/" },
+    { text: "Dashboard", link: "/innovator/home" },
     { text: "My Projects", link: "/innovator/projects" },
     { text: "Messages", link: "/innovator/messages" },
   ];

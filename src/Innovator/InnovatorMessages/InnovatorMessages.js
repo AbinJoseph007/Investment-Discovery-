@@ -17,6 +17,7 @@ function InnovatorMessages() {
   const [dMsgLoading, setDMsgLoading] = useState(true);
 
   useEffect(() => {
+    
     if (searchParams) {
       setId(searchParams.get("id"));
     }

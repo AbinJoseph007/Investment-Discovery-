@@ -41,6 +41,7 @@ function ProjectView() {
       const url = `${endpoints.PROJECT_VIEW}${id}`;
       const apiResponse = await projectview(url);
       const { response, error } = apiResponse;
+      console.log(response);
       if (!error && response) {
         setProject(response.data[0]);
         console.log(response.data[0]);
