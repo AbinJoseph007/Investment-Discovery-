@@ -79,7 +79,6 @@ function InvestorProjects() {
               <i className="fa-solid fa-search" onClick={handleSearch} />
             </InputGroup.Text>
           </InputGroup>
-
           <Row>
             {filterList.length > 0
               ? filterList.map((project, index) => (
@@ -93,10 +92,7 @@ function InvestorProjects() {
                         <h3 className="project-title bg-white py-3 text-center mx-auto">
                           {project.project_name}
                         </h3>
-                        <Card.Text>
-                          {/* <p className="text-secondary m-0 p-0">
-                            Innovator: {project.innovator}
-                          </p> */}
+                        <Card.Text>           
                           {project.description}
                         </Card.Text>
                         <ProgressBar

@@ -13,6 +13,7 @@ import InnovatorHome from "./Innovator/InnovatorHome/InnovatorHome";
 import { InvestorHome } from "./Investor/InvestorHome/InvestorHome";
 import ProjectviewSkeleton from "./CommonComponents/Card Skeleton/ProjectviewSkeleton";
 import About from "./CommonComponents/Home/About";
+import InvestedProjects from "./Investor/InvestorProjects/InvestedProjects";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/investor/home" element={<InvestorHome/>}></Route>
         <Route path="/investor/project" element={<InvestorProjects/>}></Route>
         <Route path="/investor/project/:id" element={<InvestorProjectView />}></Route>
+        <Route path="/investor/projects" element={<InvestedProjects/>}></Route>
         <Route path="/abcd" element={<ProjectviewSkeleton/>}></Route>
       </Routes>
     </>

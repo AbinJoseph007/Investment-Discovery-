@@ -215,6 +215,7 @@ function InnovatorProjects() {
       setReload(false);
       getCategories();
       getProjects();
+      
     }, 1000);
   }, [reload]);
 

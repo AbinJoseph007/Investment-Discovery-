@@ -91,17 +91,19 @@ function InvestorProjectView() {
       let { response, error } = investResponse;
       if (!error && response) {
         let responseMessage = "Succesfully Invested";
-        // toast.success(responseMessage, {
-        //   position: "bottom-center",
-        //   autoClose: 3000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "dark",
-        //   transition: Slide,
-        // });
+        toast.success(responseMessage, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+        setShow(false);
+
         console.log("success");
         setInvestInput({
           full_name: "",
