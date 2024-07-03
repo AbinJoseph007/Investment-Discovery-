@@ -15,6 +15,7 @@ import video3 from "../../Assets/ph-video-3.mp4";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../CommonComponents/Footer/Footer";
 import Header from "../../CommonComponents/Header/Header";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
 import { GiPayMoney } from "react-icons/gi";
@@ -26,14 +27,20 @@ import Accordion from "react-bootstrap/Accordion";
 
 function InvestorProjectView() {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [project, setProject] = useState("");
   const [projectUpdates, setProjectUpdates] = useState([]);
-  console.log("updates", projectUpdates);
+  const [investInput, setInvestInput] = useState({
+    full_name: "",
+    account_no: "",
+    mobile_number: "",
+    amount: 0,
+  });
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const { id } = useParams();
   const { request: projectview } = useApi("get");
+  const { request: investProject } = useApi("post");
 
   // payment
   const payment = async () => {
@@ -68,6 +75,41 @@ function InvestorProjectView() {
       const { response, error } = updatesResponse;
       if (!error && response) {
         setProjectUpdates(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //INVEST_IN_PROJECT
+  const InvestProject = async (e) => {
+    e.preventDefault();
+    try {
+      const payload = investInput;
+      let investUrl = `${endpoints.INVEST_IN_PROJECT}${id}`;
+      let investResponse = await investProject(investUrl, payload);
+      let { response, error } = investResponse;
+      if (!error && response) {
+        let responseMessage = "Succesfully Invested";
+        toast.success(responseMessage, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+        console.log("success");
+        setInvestInput({
+          full_name: "",
+          account_no: "",
+          mobile_number: "",
+          amount: 0,
+        });
+        setShow(false);
       }
     } catch (error) {
       console.log(error);
@@ -127,17 +169,23 @@ function InvestorProjectView() {
                 >
                   <Card.Body>
                     <Card.Title className="fs-3 fw-bold text-center">
-                      {project.project_name}
+                      <h1>{project.project_name}</h1>
                     </Card.Title>
                     <Card.Text>
                       <div
                         style={{ textAlign: "justify" }}
                         className="mt-4 px-3"
                       >
+                        <b>Description: </b>
                         {project.description}
+                        <p className="mt-2">
+                          <b>Deadline:</b> {project.end_date || "N/A"}
+                        </p>
                       </div>
                       <div className="fw-bold mt-3 px-3">
-                        <div className="text-center">Target Amount</div>
+                        <div className="text-center">
+                          <h5>Target Amount</h5>{" "}
+                        </div>
                         <ProgressBar
                           variant="success"
                           className="striped"
@@ -148,10 +196,6 @@ function InvestorProjectView() {
                           data-bs-theme="dark"
                         />
                       </div>
-
-                      <p className="mt-2 px-3">
-                        Deadline: {project.end_date || "N/A"}
-                      </p>
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -159,7 +203,7 @@ function InvestorProjectView() {
             </Row>
             <div className="text-center">
               <button
-                className="btn btn-outline-secondary mt-2"
+                className="btn btn-outline-secondary mt-2 w-50"
                 onClick={handleShow}
               >
                 Make Investment
@@ -188,6 +232,7 @@ function InvestorProjectView() {
                 </Accordion.Item>
               </Accordion>
             </div>
+            <ToastContainer />
 
             <Modal
               show={show}
@@ -204,31 +249,52 @@ function InvestorProjectView() {
                   type="text"
                   placeholder="Full Name"
                   name="update_message"
+                  onChange={(e) =>
+                    setInvestInput({
+                      ...investInput,
+                      full_name: e.target.value,
+                    })
+                  }
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Account Number"
                   name="update_message"
+                  onChange={(e) =>
+                    setInvestInput({
+                      ...investInput,
+                      account_no: e.target.value,
+                    })
+                  }
                 />
                 <input
                   className="form-control mb-3"
-                  type="text"
+                  type="number"
                   placeholder="Mobile Number"
                   name="update_message"
+                  onChange={(e) =>
+                    setInvestInput({
+                      ...investInput,
+                      mobile_number: e.target.value,
+                    })
+                  }
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Amount"
                   name="update_message"
+                  onChange={(e) =>
+                    setInvestInput({ ...investInput, amount: e.target.value })
+                  }
                 />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="success" onClick={payment}>
+                <Button variant="success" onClick={InvestProject}>
                   Pay
                 </Button>
               </Modal.Footer>
