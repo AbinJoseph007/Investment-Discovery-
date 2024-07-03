@@ -142,14 +142,9 @@ function ProjectView() {
                 
                 </div>
               </div>
+              <div><span className="fw-bold">Updations:</span>{updateInput.update_message}</div>
             </div>
           </div>
-
-
-
-
-
-
 
 
 
