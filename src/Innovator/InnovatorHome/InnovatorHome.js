@@ -64,7 +64,7 @@ function InnovatorHome() {
       { text: "Home", link: "/", icon: "th-large" },
 
       { text: "My Projects", link: "/innovator/projects", icon: "columns" },
-      { text: "Messages", link: "/innovator/messages", icon: "envelope" }
+      { text: "Messages", link: "/innovator/messages", icon: "envelope" },
     ];
 
     return <Aside asideObj={asideObj} />;
@@ -101,6 +101,7 @@ function InnovatorHome() {
     try {
       const url = `${endpoints.ADD_PROJECT}`;
       const { response, error } = await addProjects(url, formData);
+      console.log("response for add", response);
       if (!error && response) {
         toast.success("Project Added Successfully", {
           position: "bottom-center",
@@ -176,10 +177,9 @@ function InnovatorHome() {
     getProjects();
   }, []);
 
-  
   return (
     <>
-      <div className="main-grid " style={{overflowX:'scroll'}}>
+      <div className="main-grid " style={{ overflowX: "scroll" }}>
         <div> {fetchAsideItems()}</div>
         <div className="p-5">
           <Row>
@@ -230,31 +230,31 @@ function InnovatorHome() {
                         <td>{project.project_name}</td>
                         <td>{project.amount}</td>
                         <td>{project.end_date}</td>
-                        <td style={{alignItems:'center'}}>
+                        <td style={{ alignItems: "center" }}>
                           {" "}
-                          <AvatarGroup   sx={{ width: 24, height: 24 }}>
+                          <AvatarGroup sx={{ width: 24, height: 24 }}>
                             <Avatar
-                             sx={{ width: 30, height: 30 }}
+                              sx={{ width: 30, height: 30 }}
                               alt="Remy Sharp"
                               src="/static/images/avatar/1.jpg"
                             />
                             <Avatar
-                             sx={{ width: 30, height: 30 }}
+                              sx={{ width: 30, height: 30 }}
                               alt="Travis Howard"
                               src="/static/images/avatar/2.jpg"
                             />
                             <Avatar
-                             sx={{ width: 30, height: 30 }}
+                              sx={{ width: 30, height: 30 }}
                               alt="Cindy Baker"
                               src="/static/images/avatar/3.jpg"
                             />
                             <Avatar
-                             sx={{ width: 30, height: 30 }}
+                              sx={{ width: 30, height: 30 }}
                               alt="Agnes Walker"
                               src="/static/images/avatar/4.jpg"
                             />
                             <Avatar
-                             sx={{ width: 30, height: 30 }}
+                              sx={{ width: 30, height: 30 }}
                               alt="Trevor Henderson"
                               src="/static/images/avatar/5.jpg"
                             />
