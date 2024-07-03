@@ -38,14 +38,14 @@ function Header({ navObj }) {
   const [isLogin, setIsLogin] = useState(false);
 
   const login = () => {
-    if (localStorage.getItem("token")) {
+    if (sessionStorage.getItem("token")) {
       setIsLogin(true);
     }
   };
 
   const logOut = () => {
     setIsLogin(false)
-    localStorage.removeItem("token")
+    sessionStorage.removeItem("token")
    navigate("/")
   };
 

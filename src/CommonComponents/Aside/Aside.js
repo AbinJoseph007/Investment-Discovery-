@@ -19,7 +19,7 @@ function Aside({ asideObj }) {
 
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     navigate('/');
   };
 

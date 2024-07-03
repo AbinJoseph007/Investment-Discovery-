@@ -73,8 +73,11 @@ function ProjectView() {
       const apiResponse = await UpdateProject(url, payload);
       console.log(apiResponse);
       const { response, error } = apiResponse;
+      console.log(response,"message");
       if (!error && response) {
-        setProject(response.data[0]);
+        // setProject(response.data[0]);
+        getSingleProject()
+        setShow(false)
         toast.success('Project Updations added Successfully', {
           position: "bottom-center",
           autoClose: 5000,
@@ -139,7 +142,6 @@ function ProjectView() {
                 </ListGroup>
                 <div className="d-flex justify-content-between mb-3">
                   <p>Deadline: {project.end_date || "N/A"}</p>
-                
                 </div>
               </div>
               <div><span className="fw-bold">Updations:</span>{updateInput.update_message}</div>

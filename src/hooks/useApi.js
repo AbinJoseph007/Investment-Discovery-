@@ -5,7 +5,7 @@ const useApi = (type) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const authToken = localStorage.getItem("token");
+  const authToken = sessionStorage.getItem("token");
 
   const request = async (...args) => {
     setLoading(true);
