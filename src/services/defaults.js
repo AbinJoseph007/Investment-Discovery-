@@ -13,6 +13,7 @@ export const endpoints = {
   GET_PROJECTS:`projectview/`,
   ADD_INTEREST:`project/notify/`,
   GET_PROJECT_UPDATE:`get/updation/`,
+  INVEST_IN_PROJECT: `make/payment/`,
 
 
   // Innovator
