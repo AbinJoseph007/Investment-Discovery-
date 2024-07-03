@@ -30,6 +30,8 @@ function InnovatorProjects() {
   const [innovatorProjects, setInnovatorProjects] = useState([]);
   const [isEditForm, setIsEditForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
+
   const { request: getCategory } = useApi("get");
   const { request: addCategory } = useApi("post");
   const { request: addProjects } = useApi("mPost");
@@ -190,6 +192,18 @@ function InnovatorProjects() {
     const url = `${endpoints.DELETE_PROJECT}${id}`;
     try {
       apiResponse = await deleteInnovatorProject(url);
+      setReload(true);
+      toast.success("Project Deleted Successfully", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       // console.log(apiResponse);
     } catch (error) {
       console.log(error);
@@ -198,11 +212,11 @@ function InnovatorProjects() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      setReload(false);
       getCategories();
       getProjects();
     }, 1000);
-  }, []);
+  }, [reload]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();

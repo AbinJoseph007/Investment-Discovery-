@@ -7,6 +7,7 @@ import {
   Modal,
   ProgressBar,
   Row,
+  Card,
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { endpoints } from "../../services/defaults";
@@ -15,7 +16,7 @@ import "./InnovatorProject.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import CardSkeleton from "../../CommonComponents/Card Skeleton/CardSkeleton";
 import Header from "../../CommonComponents/Header/Header";
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from "react-bootstrap/Accordion";
 import { MdOutlineUpdate } from "react-icons/md";
 
 function ProjectView() {
@@ -31,7 +32,6 @@ function ProjectView() {
   const [investors, setInvestors] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const navObj = [
     { text: "Home", link: "/" },
@@ -62,45 +62,48 @@ function ProjectView() {
     setUpdateInput({ ...updateInput, [name]: value });
   };
 
-
-
-    // get Project Updates
-    const getInvestorDetails = async () => {
-      try {
-        const getInvestorDetailUrl = `${endpoints.GET_INVESTOR_LIST}${id}`;
-        let InvestorDetail = await GetInvestors(getInvestorDetailUrl);
-        const { response, error } = InvestorDetail;
-        if (!error && response) {
-          setInvestors(response.data);
-        }
-      } catch (error) {
-        console.log(error);
+  // get Project Updates
+  const getInvestorDetails = async () => {
+    try {
+      const getInvestorDetailUrl = `${endpoints.GET_INVESTOR_LIST}${id}`;
+      let InvestorDetail = await GetInvestors(getInvestorDetailUrl);
+      const { response, error } = InvestorDetail;
+      if (!error && response) {
+        setInvestors(response.data);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    useEffect(() => {
-      getInvestorDetails();
-    },[])
+  useEffect(() => {
+    getInvestorDetails();
+  }, []);
 
-  console.log('invest',investors);
+  console.log("invest", investors);
 
-  if (!project) return <div><CardSkeleton /></div>;
+  if (!project)
+    return (
+      <div>
+        <CardSkeleton />
+      </div>
+    );
 
   const handleUpdate = async (e) => {
     try {
       const url = `${endpoints.UPDATE_PROJECT}${id}`;
       const payload = {
-        update_message: updateInput.update_message
+        update_message: updateInput.update_message,
       };
       const apiResponse = await UpdateProject(url, payload);
       console.log(apiResponse);
       const { response, error } = apiResponse;
-      console.log(response,"message");
+      console.log(response, "message");
       if (!error && response) {
         // setProject(response.data[0]);
-        getSingleProject()
-        setShow(false)
-        toast.success('Project Updations added Successfully', {
+        getSingleProject();
+        setShow(false);
+        toast.success("Project Updations added Successfully", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -115,23 +118,22 @@ function ProjectView() {
     } catch (error) {
       console.error("Failed to fetch project", error);
     }
-  }
+  };
 
   return (
     <>
       <div className="sticky-top">
         <Header navObj={navObj} />
       </div>
+
       <div className="main-div">
-        <Container fluid={"sm"} className="p-3 pb-0 text-center">
-          <div className="text-end">
+        <Container fluid={"sm"} className="pb-0 text-center">
+          <div className="text-end mt-3">
             {" "}
             <Button onClick={handleShow}>Add Updations</Button>
           </div>
-          
 
-          <div className="row shadow">
-
+          {/* <div className="row shadow">
             <div className="col p-1">
               <img
                 className="img-fluid mb-3"
@@ -142,7 +144,7 @@ function ProjectView() {
             </div>
             <div className="col">
               <div className="container mt-5 px-4">
-              <h2>{project.project_name}</h2>
+                <h2>{project.project_name}</h2>
                 <p style={{ textAlign: "justify" }} className="mb-5">
                   {project.description}
                 </p>
@@ -158,53 +160,104 @@ function ProjectView() {
                   style={{ height: "30px" }}
                   data-bs-theme="dark"
                 />
-                <ListGroup className='w-75 mx-auto fw-bold  mb-5'>
-                  {project.investors?.map((i, index) =>
-                    <ListGroup.Item className='bg-transparent d-flex justify-content-evenly' key={index}>{i.name} <span className='vr mx-4'></span> ₹{i.amount}</ListGroup.Item>)}
-
+                <ListGroup className="w-75 mx-auto fw-bold  mb-5">
+                  {project.investors?.map((i, index) => (
+                    <ListGroup.Item
+                      className="bg-transparent d-flex justify-content-evenly"
+                      key={index}
+                    >
+                      {i.name} <span className="vr mx-4"></span> ₹{i.amount}
+                    </ListGroup.Item>
+                  ))}
                 </ListGroup>
                 <div className="d-flex justify-content-between mb-3">
                   <p>Deadline: {project.end_date || "N/A"}</p>
                 </div>
               </div>
-              <div><span className="fw-bold">Updations:</span>{updateInput.update_message}</div>
+              <div>
+                <span className="fw-bold">Updations:</span>
+                {updateInput.update_message}
+              </div>
             </div>
+          </div> */}
+          <Row className="py-3">
+            <Col>
+              <img
+                className="img-fluid"
+                src={`http://127.0.0.1:8000/${project.image}`}
+                alt=""
+                style={{ height: "400px", borderRadius: "10px" }}
+              />
+            </Col>
+            <Col>
+              <Card
+                className=" px-2 shadow"
+                style={{ width: "100%", height: "400px" }}
+              >
+                <Card.Body>
+                  <Card.Title className="fs-3 fw-bold text-center">
+                    <h1>{project.project_name}</h1>
+                  </Card.Title>
+                  <Card.Text>
+                    <div style={{ textAlign: "justify" }} className="mt-4 px-3">
+                      <b>Description: </b>
+                      {project.description}
+                      <p className="mt-2">
+                        <b>Deadline:</b> {project.end_date || "N/A"}
+                      </p>
+                    </div>
+                    <div className="fw-bold mt-3 px-3">
+                      <div className="text-center">
+                        <h5>Amount raised</h5>{" "}
+                      </div>
+                      <ProgressBar
+                        variant="success"
+                        className="striped"
+                        now={(project.amount / project.amount) * 100}
+                        label={`₹${project.amount}`}
+                        title={`₹${project.amount} / ₹${project.targetAmount}`}
+                        style={{ height: "30px" }}
+                        data-bs-theme="dark"
+                      />
+                    </div>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
 
-
-            
-          </div>
-
-
-          <div className="text-start">
-              <Accordion defaultActiveKey="1" className="my-3">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>
+          <div className="text-start ms-3">
+            <Accordion defaultActiveKey="1" className="my-3">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>
+                  {" "}
+                  <h5>
                     {" "}
-                    <h5>
-                      {" "}
-                      <MdOutlineUpdate /> See Investors
-                    </h5>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <ol>
+                    <MdOutlineUpdate /> See Investors
+                  </h5>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <ol>
                     {investors?.length > 0
-                        ? investors.map((project, index) => (
-                            <li><p> <b>Investor Name: </b>{project.full_name} &nbsp; &nbsp; <b>Amount: &#8377;</b>{project.amount} </p></li>
-                          ))
-                        : "No project Updates"}
-                    </ol>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-            </div>
-
-
+                      ? investors.map((project, index) => (
+                          <li>
+                            <p>
+                              {" "}
+                              <b>Investor Name: </b>
+                              {project.full_name} &nbsp; &nbsp;{" "}
+                              <b>Amount: &#8377;</b>
+                              {project.amount}{" "}
+                            </p>
+                          </li>
+                        ))
+                      : "No Investors Yet!"}
+                  </ol>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </div>
         </Container>
       </div>
-
-
-
-
 
       <Modal
         show={show}
@@ -229,7 +282,9 @@ function ProjectView() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e) => handleUpdate(e)}>Save</Button>
+          <Button variant="primary" onClick={(e) => handleUpdate(e)}>
+            Save
+          </Button>
         </Modal.Footer>
       </Modal>
       <ToastContainer />
