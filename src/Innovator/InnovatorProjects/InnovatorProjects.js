@@ -201,6 +201,7 @@ function InnovatorProjects() {
       setLoading(false);
       getCategories();
       getProjects();
+      
     }, 1000);
   }, []);
 

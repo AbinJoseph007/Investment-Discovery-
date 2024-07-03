@@ -125,7 +125,7 @@ function InvestorProjectView() {
 
   const navObj = [
     { text: "Home", link: "/" },
-    { text: "Projects", link: "/investor/project" },
+    { text: "Projects", link: "/investor/projects" },
     { text: "Messages", link: "/innovator/messages" },
   ];
   return (
