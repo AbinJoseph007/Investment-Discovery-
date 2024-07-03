@@ -180,7 +180,7 @@ function InnovatorAuth() {
           navigate("/investor/home");
         }
 
-        localStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("token", response.data.token);
       } else {
         console.log(error.response.data.message);
         const responseMessage =

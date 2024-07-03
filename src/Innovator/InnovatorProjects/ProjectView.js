@@ -74,7 +74,9 @@ function ProjectView() {
       console.log(apiResponse);
       const { response, error } = apiResponse;
       if (!error && response) {
-        setProject(response.data[0]);
+        // setProject(response.data[0]);
+        handleClose()
+        setUpdateInput({})
         toast.success('Project Updations added Successfully', {
           position: "bottom-center",
           autoClose: 5000,
@@ -90,6 +92,7 @@ function ProjectView() {
     } catch (error) {
       console.error("Failed to fetch project", error);
     }
+   
   }
 
   return (

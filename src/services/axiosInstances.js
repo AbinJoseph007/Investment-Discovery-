@@ -19,7 +19,7 @@ const baseInstance = () => {
 
 const authInstance = () => {
   const API_URL = process.env.BASE_URL;
-  const authToken = localStorage.getItem("token");
+  const authToken = sessionStorage.getItem("token");
   let headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -37,7 +37,7 @@ const authInstance = () => {
 
 const MauthInstance = () => {
   const API_URL = process.env.BASE_URL;
-  const authToken = localStorage.getItem("token");
+  const authToken = sessionStorage.getItem("token");
   let headers = {
     "Content-Type": "multipart/form-data",
     Accept: "application/json",
