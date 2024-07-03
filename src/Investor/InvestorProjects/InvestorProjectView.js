@@ -1,40 +1,52 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Container, ListGroup, ProgressBar, Row, Col, Card } from 'react-bootstrap'
-import './InvestorProject.css'
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Container,
+  ListGroup,
+  ProgressBar,
+  Row,
+  Col,
+  Card,
+} from "react-bootstrap";
+import "./InvestorProject.css";
 import video1 from "../../Assets/ph-video-1.mp4";
 import video2 from "../../Assets/ph-video-2.mp4";
 import video3 from "../../Assets/ph-video-3.mp4";
-import { Link, useParams } from 'react-router-dom';
-import Footer from '../../CommonComponents/Footer/Footer';
-import Header from '../../CommonComponents/Header/Header';
+import { Link, useParams } from "react-router-dom";
+import Footer from "../../CommonComponents/Footer/Footer";
+import Header from "../../CommonComponents/Header/Header";
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
 import { GiPayMoney } from "react-icons/gi";
 import { AiFillMessage } from "react-icons/ai";
-import Modal from 'react-bootstrap/Modal';
-import Swal from 'sweetalert2'
-function InvestorProjectView() {
+import { MdOutlineUpdate } from "react-icons/md";
+import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
+import Accordion from "react-bootstrap/Accordion";
 
+function InvestorProjectView() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [project, setProject] = useState('')
+  const [project, setProject] = useState("");
+  const [projectUpdates, setProjectUpdates] = useState([]);
+  console.log("updates", projectUpdates);
+
   const { id } = useParams();
   const { request: projectview } = useApi("get");
 
-// payment
-const payment= async()=>{
-  Swal.fire({
-    imageUrl: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
-    imageHeight: 300,
-    imageAlt: "Payment Successfull",
-  });
-setShow(false)
-} 
+  // payment
+  const payment = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
+      imageHeight: 300,
+      imageAlt: "Payment Successfull",
+    });
+    setShow(false);
+  };
 
-
-
-
+  //getSingleProject
   const getSingleProject = async () => {
     try {
       const url = `${endpoints.PROJECT_VIEW}${id}`;
@@ -42,41 +54,64 @@ setShow(false)
       const { response, error } = apiResponse;
       if (!error && response) {
         setProject(response.data[0]);
-
       }
     } catch (error) {
       console.error("Failed to fetch project", error);
     }
   };
+
+  // get Project Updates
+  const getProjectUpdates = async () => {
+    try {
+      const getProjectUpdatesUrl = `${endpoints.GET_PROJECT_UPDATE}${id}`;
+      let updatesResponse = await projectview(getProjectUpdatesUrl);
+      const { response, error } = updatesResponse;
+      if (!error && response) {
+        setProjectUpdates(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSingleProject();
+    getProjectUpdates();
   }, [id]);
 
-  console.log(project);
+  // console.log(project);
 
-
-
-
-  const navObj = [{ text: 'Home', link: '/' }, { text: 'Projects', link: '/investor/project' }, { text: 'Messages', link: '/innovator/messages' }]
+  const navObj = [
+    { text: "Home", link: "/" },
+    { text: "Projects", link: "/investor/project" },
+    { text: "Messages", link: "/innovator/messages" },
+  ];
   return (
     <>
-      <div className='sticky-top'><Header navObj={navObj} /></div>
+      <div className="sticky-top">
+        <Header navObj={navObj} />
+      </div>
 
-      <div className='main-div'>
+      <div className="main-div">
         <div>
-          <div className='d-flex justify-content-between'>
-            <Link to={'/investor/home'}>
-              <Button variant="dark rounded-0 " className='ms-2 mt-2 rounded-pill'><i className="fa-solid fa-arrow-left"></i></Button>
+          <div className="d-flex justify-content-between">
+            <Link to={"/investor/home"}>
+              <Button
+                variant="dark rounded-0 "
+                className="ms-2 mt-2 rounded-pill"
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+              </Button>
             </Link>
-            <Link to={'/innovator/messages'}>
-              <AiFillMessage className='fs-1 mt-2 ' color='black' />
+            <Link to={"/innovator/messages"}>
+              <AiFillMessage className="fs-1 mt-2 " color="black" />
             </Link>
           </div>
         </div>
 
         <div className="main-div">
           <Container fluid={"sm"} className="">
-            <Row >
+            <Row>
               <Col>
                 <img
                   className="img-fluid mb-3"
@@ -85,20 +120,24 @@ setShow(false)
                   style={{ height: "400px", borderRadius: "10px" }}
                 />
               </Col>
-              <Col className=''>
-                <Card className=' px-2 shadow' style={{ width: '100%', height: "400px" }}>
-
+              <Col className="">
+                <Card
+                  className=" px-2 shadow"
+                  style={{ width: "100%", height: "400px" }}
+                >
                   <Card.Body>
-                    <Card.Title className='fs-3 fw-bold text-center'>{project.project_name}</Card.Title>
+                    <Card.Title className="fs-3 fw-bold text-center">
+                      {project.project_name}
+                    </Card.Title>
                     <Card.Text>
-                      <div style={{ textAlign: "justify" }} className='mt-4 px-3'>
+                      <div
+                        style={{ textAlign: "justify" }}
+                        className="mt-4 px-3"
+                      >
                         {project.description}
                       </div>
-                      <div className='fw-bold mt-3 px-3'>
-
-                        <div className='text-center'>
-                          Target Amount
-                        </div>
+                      <div className="fw-bold mt-3 px-3">
+                        <div className="text-center">Target Amount</div>
                         <ProgressBar
                           variant="success"
                           className="striped"
@@ -110,17 +149,44 @@ setShow(false)
                         />
                       </div>
 
-                      <p className='mt-2 px-3'>Deadline: {project.end_date || "N/A"}</p>
-
-
+                      <p className="mt-2 px-3">
+                        Deadline: {project.end_date || "N/A"}
+                      </p>
                     </Card.Text>
-
                   </Card.Body>
                 </Card>
               </Col>
             </Row>
-            <div className='text-center'>
-              <button className='btn btn-outline-secondary mt-2' onClick={handleShow}>Make Investment<GiPayMoney className='fs-4' /></button>
+            <div className="text-center">
+              <button
+                className="btn btn-outline-secondary mt-2"
+                onClick={handleShow}
+              >
+                Make Investment
+                <GiPayMoney className="fs-4" />
+              </button>
+            </div>
+            <div>
+              <Accordion defaultActiveKey="1" className="my-3">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    {" "}
+                    <h5>
+                      {" "}
+                      <MdOutlineUpdate /> See Project Updates
+                    </h5>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <ul>
+                      {projectUpdates?.length > 0
+                        ? projectUpdates.map((project, index) => (
+                            <p>[Date] {project.update_message}</p>
+                          ))
+                        : "No project Updates"}
+                    </ul>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </div>
 
             <Modal
@@ -138,44 +204,40 @@ setShow(false)
                   type="text"
                   placeholder="Full Name"
                   name="update_message"
-
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Account Number"
                   name="update_message"
-
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Mobile Number"
                   name="update_message"
-
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Amount"
                   name="update_message"
-
                 />
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="success" onClick={payment}>Pay</Button>
+                <Button variant="success" onClick={payment}>
+                  Pay
+                </Button>
               </Modal.Footer>
             </Modal>
           </Container>
         </div>
       </div>
-
     </>
-
-  )
+  );
 }
 
-export default InvestorProjectView
+export default InvestorProjectView;

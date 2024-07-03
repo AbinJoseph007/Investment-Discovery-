@@ -22,8 +22,8 @@ import Header from "../../CommonComponents/Header/Header";
 function InvestorProjects() {
   const { request: getProjects } = useApi("get");
   const [allProject, setAllProject] = useState([]);
-  const [search, setSearch] = useState("")
-  const [filterList,setFilterList] = useState([])
+  const [search, setSearch] = useState("");
+  const [filterList, setFilterList] = useState([]);
 
   const getAllProjects = async () => {
     try {
@@ -40,27 +40,25 @@ function InvestorProjects() {
     }
   };
 
-  const handleSearch=()=>{
-
-console.log("search");
-    if(search=== ''){
-      setFilterList(allProject)
-      
+  const handleSearch = () => {
+    console.log("search");
+    if (search === "") {
+      setFilterList(allProject);
+    } else {
+      const filtered = allProject.filter((project) =>
+        project.project_name.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilterList(filtered);
     }
-    else{
-      const filtered = allProject.filter((project)=>project.project_name.toLowerCase().includes(search.toLowerCase()))
-      setFilterList(filtered)
-    }
-  }
-  
+  };
 
   useEffect(() => {
     getAllProjects();
   }, []);
 
-  useEffect(()=>{
-    handleSearch()
-  },[search,allProject])
+  useEffect(() => {
+    handleSearch();
+  }, [search, allProject]);
 
   return (
     <>
@@ -74,14 +72,13 @@ console.log("search");
               className="border border-black"
               placeholder="Search..."
               value={search}
-              onChange={(e)=>setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
             <InputGroup.Text className="border border-black">
               {" "}
-              <i className="fa-solid fa-search" onClick={handleSearch}/>
+              <i className="fa-solid fa-search" onClick={handleSearch} />
             </InputGroup.Text>
           </InputGroup>
-
 
           <Row>
             {filterList.length > 0
@@ -105,9 +102,7 @@ console.log("search");
                         <ProgressBar
                           variant="success"
                           className="striped"
-                          now={
-                            (project.amount / project.amount) * 100
-                          }
+                          now={(project.amount / project.amount) * 100}
                           label={`₹${project.AmountRaised}`}
                           title={`₹${project.AmountRaised} / ₹${project.amount}`}
                           data-bs-theme="dark"

@@ -35,7 +35,7 @@ function InnovatorProjects() {
   const { request: addProjects } = useApi("mPost");
   const { request: getInnovatorProjects } = useApi("hget");
   const { request: deleteInnovatorProject } = useApi("delete");
-  const { request: editInnovatorProject } = useApi("mPut"); 
+  const { request: editInnovatorProject } = useApi("mPut");
 
   const [photo, setPhoto] = useState(null);
   const [projectData, setProjectData] = useState({
@@ -49,7 +49,7 @@ function InnovatorProjects() {
 
   const [inputValue, setInputValue] = useState("");
 
-  console.log(projectData);
+  // console.log(projectData);
 
   const navObj = [
     { text: "Dashboard", link: "/innovator/home" },
@@ -81,7 +81,7 @@ function InnovatorProjects() {
     setIsEditForm(true);
     setShow(true);
     setPhoto(null);
-    console.log(project);
+    // console.log(project);
     setProjectData(project);
   };
 
@@ -103,7 +103,7 @@ function InnovatorProjects() {
     try {
       const url = `${endpoints.ADD_PROJECT}`;
       const { response, error } = await addProjects(url, formData);
-      console.log(response, error);
+      // console.log(response, error);
       if (!error && response) {
         toast.success("Project Added Successfully", {
           position: "bottom-center",
@@ -140,10 +140,9 @@ function InnovatorProjects() {
     setPhoto(file);
     setProjectData((prevDetails) => ({
       ...prevDetails,
-      image: file,  // Ensure 'image' is set to the File object
+      image: file, // Ensure 'image' is set to the File object
     }));
   };
-
 
   // ADD CATEGORY
   const options = cat.map((category) => ({
@@ -191,7 +190,7 @@ function InnovatorProjects() {
     const url = `${endpoints.DELETE_PROJECT}${id}`;
     try {
       apiResponse = await deleteInnovatorProject(url);
-      console.log(apiResponse);
+      // console.log(apiResponse);
     } catch (error) {
       console.log(error);
     }
@@ -214,7 +213,8 @@ function InnovatorProjects() {
     formData.append("amount", projectData.amount);
     formData.append("end_date", projectData.end_date);
     formData.append("category", projectData.category);
-    if (projectData.image instanceof File) {  // Check if it's a file
+    if (projectData.image instanceof File) {
+      // Check if it's a file
       formData.append("image", projectData.image);
     }
 
@@ -257,7 +257,9 @@ function InnovatorProjects() {
             variant="outline-dark rounded-0 py-3 px-4"
             className="mx-auto d-flex align-items-center"
           >
-            <span className="hidden">Add a project&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span className="hidden">
+              Add a project&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
             <i className="fa-solid fa-plus fa-xl"></i>
           </Button>
 
@@ -277,8 +279,14 @@ function InnovatorProjects() {
                         }}
                       ></Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={(e) => showEditForm(project)}>Edit</Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => handleDelete(e, project.id)}>Delete</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => showEditForm(project)}>
+                          Edit
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={(e) => handleDelete(e, project.id)}
+                        >
+                          Delete
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                     <Card.Img
@@ -286,8 +294,12 @@ function InnovatorProjects() {
                       className="project-image rounded-0 m-0"
                     />
                     <Card.Body className="m-0">
-                      <h3 className="project-title bg-white py-3 text-center mx-auto">{project.project_name}</h3>
-                      <Card.Text style={{ textAlign: "justify" }}>{project.description.slice(0, 100) + "..."}</Card.Text>
+                      <h3 className="project-title bg-white py-3 text-center mx-auto">
+                        {project.project_name}
+                      </h3>
+                      <Card.Text style={{ textAlign: "justify" }}>
+                        {project.description.slice(0, 100) + "..."}
+                      </Card.Text>
                       <ProgressBar
                         variant="success"
                         className="striped"
@@ -320,17 +332,33 @@ function InnovatorProjects() {
       </div>
 
       {/* Add project modal */}
-      <Modal show={show} onHide={() => setShow(false)} dialogClassName="modal-addproject" centered size="lg">
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        dialogClassName="modal-addproject"
+        centered
+        size="lg"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>{isEditForm ? "Edit Project" : "Add a new project"}</Modal.Title>
+          <Modal.Title>
+            {isEditForm ? "Edit Project" : "Add a new project"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="px-lg-5">
           <div>
             <div className="text-center w-100">
               <label style={{ cursor: "pointer" }}>
-                <input type="file" style={{ display: "none" }} onChange={handleImage} />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleImage}
+                />
                 <img
-                  src={photo ? URL.createObjectURL(photo) : `http://127.0.0.1:8000/${projectData.image}`}
+                  src={
+                    photo
+                      ? URL.createObjectURL(photo)
+                      : `http://127.0.0.1:8000/${projectData.image}`
+                  }
                   alt="Cover Image Upload"
                   height={200}
                   className="border border-black p-3"
@@ -338,7 +366,6 @@ function InnovatorProjects() {
                 />
                 <p>Cover image (png / jpg)</p>
               </label>
-
             </div>
             <FloatingLabel label="Project name" className="mb-3">
               <Form.Control
