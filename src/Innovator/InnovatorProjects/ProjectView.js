@@ -15,20 +15,23 @@ import "./InnovatorProject.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import CardSkeleton from "../../CommonComponents/Card Skeleton/CardSkeleton";
 import Header from "../../CommonComponents/Header/Header";
+import Accordion from 'react-bootstrap/Accordion';
+import { MdOutlineUpdate } from "react-icons/md";
 
 function ProjectView() {
   const [project, setProject] = useState(null);
   const { request: projectview } = useApi("get");
   const { id } = useParams();
   const { request: UpdateProject } = useApi("post");
-
+  const { request: GetInvestors } = useApi("get");
   const [updateInput, setUpdateInput] = useState({
     update_message: "",
   });
   const [show, setShow] = useState(false);
-
+  const [investors, setInvestors] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
 
   const navObj = [
     { text: "Home", link: "/" },
@@ -60,7 +63,26 @@ function ProjectView() {
   };
 
 
-  console.log(updateInput);
+
+    // get Project Updates
+    const getInvestorDetails = async () => {
+      try {
+        const getInvestorDetailUrl = `${endpoints.GET_INVESTOR_LIST}${id}`;
+        let InvestorDetail = await GetInvestors(getInvestorDetailUrl);
+        const { response, error } = InvestorDetail;
+        if (!error && response) {
+          setInvestors(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    useEffect(() => {
+      getInvestorDetails();
+    },[])
+
+  console.log('invest',investors);
 
   if (!project) return <div><CardSkeleton /></div>;
 
@@ -101,12 +123,12 @@ function ProjectView() {
         <Header navObj={navObj} />
       </div>
       <div className="main-div">
-        <Container fluid={"sm"} className="p-3 text-center">
+        <Container fluid={"sm"} className="p-3 pb-0 text-center">
           <div className="text-end">
             {" "}
             <Button onClick={handleShow}>Add Updations</Button>
           </div>
-          <h1>{project.project_name}</h1>
+          
 
           <div className="row shadow">
 
@@ -120,6 +142,7 @@ function ProjectView() {
             </div>
             <div className="col">
               <div className="container mt-5 px-4">
+              <h2>{project.project_name}</h2>
                 <p style={{ textAlign: "justify" }} className="mb-5">
                   {project.description}
                 </p>
@@ -146,14 +169,42 @@ function ProjectView() {
               </div>
               <div><span className="fw-bold">Updations:</span>{updateInput.update_message}</div>
             </div>
+
+
+            
           </div>
 
 
-
+          <div className="text-start">
+              <Accordion defaultActiveKey="1" className="my-3">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>
+                    {" "}
+                    <h5>
+                      {" "}
+                      <MdOutlineUpdate /> See Investors
+                    </h5>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <ol>
+                    {investors?.length > 0
+                        ? investors.map((project, index) => (
+                            <li><p> <b>Investor Name: </b>{project.full_name} &nbsp; &nbsp; <b>Amount: &#8377;</b>{project.amount} </p></li>
+                          ))
+                        : "No project Updates"}
+                    </ol>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </div>
 
 
         </Container>
       </div>
+
+
+
+
 
       <Modal
         show={show}

@@ -28,5 +28,6 @@ export const endpoints = {
   DELETE_PROJECT:`project/`,
   UPDATE_PROJECT:`update/`,
   EDIT_PROJECT:`project/`,
-  GET_NOTIFICATION:`notified/list/`
+  GET_NOTIFICATION:`notified/list/`,
+  GET_INVESTOR_LIST:`payed/user/list/`
 };
