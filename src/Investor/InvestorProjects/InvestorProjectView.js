@@ -9,9 +9,6 @@ import {
   Card,
 } from "react-bootstrap";
 import "./InvestorProject.css";
-import video1 from "../../Assets/ph-video-1.mp4";
-import video2 from "../../Assets/ph-video-2.mp4";
-import video3 from "../../Assets/ph-video-3.mp4";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../CommonComponents/Footer/Footer";
 import Header from "../../CommonComponents/Header/Header";
@@ -27,6 +24,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 function InvestorProjectView() {
   const [show, setShow] = useState(false);
+  const [profile, setProfile] = useState('');
   const [project, setProject] = useState("");
   const [projectUpdates, setProjectUpdates] = useState([]);
   const [investInput, setInvestInput] = useState({
@@ -38,7 +36,7 @@ function InvestorProjectView() {
 
 
   const { request: profileView } = useApi("hget");
-  const [profile, setProfile] = useState('');
+
 
 
   const getProfile = async () => {
@@ -50,11 +48,21 @@ function InvestorProjectView() {
       if (!error && response.data) {
         setProfile(response.data[0]);
         console.log(response.data[0]);
+        if (profile) {
+          setInvestInput({
+            ...investInput,
+             full_name: profile.full_name,
+          },
+           
+        )
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -105,6 +113,7 @@ function InvestorProjectView() {
   const InvestProject = async (e) => {
     e.preventDefault();
     try {
+      console.log(investInput);
       const payload = investInput;
       let investUrl = `${endpoints.INVEST_IN_PROJECT}${id}`;
       let investResponse = await investProject(investUrl, payload);
@@ -146,6 +155,7 @@ function InvestorProjectView() {
 
   useEffect(() => {
     getProfile();
+
   }, []);
   // console.log(project);
 
@@ -276,19 +286,11 @@ function InvestorProjectView() {
                   placeholder="Full Name"
                   value={profile.full_name}
                   readOnly
-                  name="update_message"
-                  onChange={(e) =>
-                    setInvestInput({
-                      ...investInput,
-                      full_name: e.target.value,
-                    })
-                  }
                 />
                 <input
                   className="form-control mb-3"
                   type="text"
                   placeholder="Account Number"
-                  name="update_message"
                   onChange={(e) =>
                     setInvestInput({
                       ...investInput,
@@ -300,7 +302,6 @@ function InvestorProjectView() {
                   className="form-control mb-3"
                   type="number"
                   placeholder="Mobile Number"
-                  name="update_message"
                   onChange={(e) =>
                     setInvestInput({
                       ...investInput,
@@ -312,7 +313,6 @@ function InvestorProjectView() {
                   className="form-control mb-3"
                   type="text"
                   placeholder="Amount"
-                  name="update_message"
                   onChange={(e) =>
                     setInvestInput({ ...investInput, amount: e.target.value })
                   }
