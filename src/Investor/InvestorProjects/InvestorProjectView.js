@@ -36,6 +36,26 @@ function InvestorProjectView() {
     amount: 0,
   });
 
+
+  const { request: profileView } = useApi("hget");
+  const [profile, setProfile] = useState('');
+
+
+  const getProfile = async () => {
+    try {
+      let apiResponse;
+      const url = `${endpoints.PROFILE}`;
+      apiResponse = await profileView(url);
+      const { response, error } = apiResponse;
+      if (!error && response.data) {
+        setProfile(response.data[0]);
+        console.log(response.data[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { id } = useParams();
@@ -118,6 +138,9 @@ function InvestorProjectView() {
     getProjectUpdates();
   }, [id]);
 
+  useEffect(() => {
+    getProfile();
+  }, []);
   // console.log(project);
 
   const navObj = [
@@ -245,6 +268,8 @@ function InvestorProjectView() {
                   className="form-control mb-3"
                   type="text"
                   placeholder="Full Name"
+                  value={profile.full_name}
+                  readOnly
                   name="update_message"
                   onChange={(e) =>
                     setInvestInput({
