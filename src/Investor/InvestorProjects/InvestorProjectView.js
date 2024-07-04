@@ -24,7 +24,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 function InvestorProjectView() {
   const [show, setShow] = useState(false);
-  const [profile, setProfile] = useState('');
+  const [profile, setProfile] = useState({});
   const [project, setProject] = useState("");
   const [projectUpdates, setProjectUpdates] = useState([]);
   const [investInput, setInvestInput] = useState({
@@ -38,10 +38,7 @@ function InvestorProjectView() {
 
   const { request: profileView } = useApi("hget");
 
-  useEffect(() => {
-    getProfile();
 
-  }, []);
 
   const getProfile = async () => {
     try {
@@ -52,14 +49,8 @@ function InvestorProjectView() {
       if (!error && response.data) {
         setProfile(response.data[0]);
         console.log(response.data[0]);
-        if (profile) {
-          setInvestInput({
-            ...investInput,
-             full_name: profile.full_name,
-          },
-           
-        )
-        }
+        console.log(profile);
+
       }
     } catch (error) {
       console.log(error);
@@ -67,6 +58,14 @@ function InvestorProjectView() {
   };
 console.log(investInput);
 
+useEffect(() => {
+  if (profile && profile.full_name) {
+    setInvestInput({
+      ...investInput,
+      full_name: profile.full_name,
+    })
+  }
+}, [profile]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -155,6 +154,7 @@ console.log(investInput);
   useEffect(() => {
     getSingleProject();
     getProjectUpdates();
+    getProfile();
   }, [id]);
 
 
