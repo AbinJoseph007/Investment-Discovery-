@@ -10,15 +10,18 @@ import logo from "../../Assets/logo-black.png";
 import { Badge } from "react-bootstrap";
 import Notifications from "../Notifications/Notifications";
 import { Avatar, Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
-
-
-
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import { IoNotifications } from "react-icons/io5";
 
 function Header({ navObj }) {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate=useNavigate()
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,7 +49,7 @@ function Header({ navObj }) {
   const logOut = () => {
     setIsLogin(false)
     sessionStorage.removeItem("token")
-   navigate("/")
+    navigate("/")
   };
 
   useEffect(() => {
@@ -97,37 +100,48 @@ function Header({ navObj }) {
           </Nav>
           <Nav>
 
-          {isLogin&&<Box sx={{ flexGrow: 0 }} className="me-3">
+            {isLogin && <Box sx={{ flexGrow: 0 }} className="me-3">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-           <MenuItem  onClick={handleCloseUserMenu}>
-                 <Link to={'/profile'} style={{textDecoration:'none',color:'black'}}> <Typography textAlign="center">Profile</Typography></Link>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to={'/profile'} style={{ textDecoration: 'none', color: 'black' }}> <Typography textAlign="center">Profile</Typography></Link>
                 </MenuItem>
-                <MenuItem  onClick={handleCloseUserMenu}>
-               <div onClick={logOut}>   <Typography textAlign="center" >LogOut</Typography></div>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <div onClick={logOut}>   <Typography textAlign="center" >LogOut</Typography></div>
                 </MenuItem>
-            </Menu>
-          </Box>}
-           
+              </Menu>
+            </Box>}
+
           </Nav>
-          <Notifications />
+          {/* <Notifications /> */}
+
+          <IoNotifications className="fs-2" onClick={handleShow} />
+          <Offcanvas show={show} onHide={handleClose}  placement="end">
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Notifications</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              Some text as placeholder. In real life you can have the elements you
+              have chosen. Like, text, images, lists, etc.
+            </Offcanvas.Body>
+          </Offcanvas>
 
         </Navbar.Collapse>
       </Container>

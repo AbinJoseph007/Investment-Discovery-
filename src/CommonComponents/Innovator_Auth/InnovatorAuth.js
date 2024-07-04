@@ -54,18 +54,19 @@ function InnovatorAuth() {
     console.log(selectUserType.user_type);
     return (
       <Form.Select
+     
         className="user-type"
         onChange={(e) =>
           setSelectUserType({ ...selectUserType, user_type: e.target.value })
         }
       >
-        <option className="" value="">
+        <option className=" select" value="">
           Select User Type
         </option>
-        <option className="" value="Innovator">
+        <option className="select" value="Innovator">
           Innovator
         </option>
-        <option className="" value="Investor">
+        <option className="select" value="Investor">
           Investor
         </option>
       </Form.Select>
@@ -201,10 +202,13 @@ function InnovatorAuth() {
   };
 
   return (
-    <div className="container auth-body">
+    <div className="row">
+      <img   src="https://static.vecteezy.com/system/resources/previews/030/223/374/large_2x/black-and-white-background-of-financial-charts-generative-ai-free-photo.jpg"/>
+      
+    {/* <div className="container auth-body"> */}
       <div className="slider">
         {showRegister ? (
-          <form className="form">
+          <form className="form"  >
             <span className="title">Sign Up</span>
             <div className="form_control">
               <input
@@ -273,7 +277,7 @@ function InnovatorAuth() {
 
               <label className="label">Password</label>
             </div>
-            <div className="form_control">{checkUserType()}</div>
+            <div className="form_control select">{checkUserType()}</div>
 
             <button onClick={(e) => handleRegister(e)}>Sign Up</button>
             <span className="bottom_text">
@@ -323,6 +327,7 @@ function InnovatorAuth() {
         )}
       </div>
       <ToastContainer />
+    {/* </div> */}
     </div>
   );
 }
