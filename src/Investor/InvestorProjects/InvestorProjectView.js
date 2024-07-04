@@ -110,15 +110,20 @@ function InvestorProjectView() {
       let investResponse = await investProject(investUrl, payload);
       let { response, error } = investResponse;
       if (!error && response) {
-
-        Swal.fire({
-          imageUrl:
-            "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
-          imageHeight: 300,
-          imageAlt: "Payment Successfull",
+        let responseMessage = "Succesfully Invested";
+        toast.success(responseMessage, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
         });
         setShow(false);
-        
+
         console.log("success");
         setInvestInput({
           full_name: "",
@@ -126,6 +131,7 @@ function InvestorProjectView() {
           mobile_number: "",
           amount: 0,
         });
+        payment();
         setShow(false);
       }
     } catch (error) {
@@ -244,8 +250,8 @@ function InvestorProjectView() {
                     <ul>
                       {projectUpdates?.length > 0
                         ? projectUpdates.map((project, index) => (
-                          <p>[Date] {project.update_message}</p>
-                        ))
+                            <p>[Date] {project.update_message}</p>
+                          ))
                         : "No project Updates"}
                     </ul>
                   </Accordion.Body>
