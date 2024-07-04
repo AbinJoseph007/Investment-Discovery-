@@ -35,9 +35,13 @@ function InvestorProjectView() {
   });
 
 
+
   const { request: profileView } = useApi("hget");
 
+  useEffect(() => {
+    getProfile();
 
+  }, []);
 
   const getProfile = async () => {
     try {
@@ -61,7 +65,7 @@ function InvestorProjectView() {
       console.log(error);
     }
   };
-
+console.log(investInput);
 
 
   const handleClose = () => setShow(false);
@@ -153,10 +157,7 @@ function InvestorProjectView() {
     getProjectUpdates();
   }, [id]);
 
-  useEffect(() => {
-    getProfile();
 
-  }, []);
   // console.log(project);
 
   const navObj = [
