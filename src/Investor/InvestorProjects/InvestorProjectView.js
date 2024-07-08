@@ -34,11 +34,7 @@ function InvestorProjectView() {
     amount: 0,
   });
 
-
-
   const { request: profileView } = useApi("hget");
-
-
 
   const getProfile = async () => {
     try {
@@ -50,22 +46,21 @@ function InvestorProjectView() {
         setProfile(response.data[0]);
         console.log(response.data[0]);
         console.log(profile);
-
       }
     } catch (error) {
       console.log(error);
     }
   };
-console.log(investInput);
+  console.log(investInput);
 
-useEffect(() => {
-  if (profile && profile.full_name) {
-    setInvestInput({
-      ...investInput,
-      full_name: profile.full_name,
-    })
-  }
-}, [profile]);
+  useEffect(() => {
+    if (profile && profile.full_name) {
+      setInvestInput({
+        ...investInput,
+        full_name: profile.full_name,
+      });
+    }
+  }, [profile]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -116,7 +111,7 @@ useEffect(() => {
   const InvestProject = async (e) => {
     e.preventDefault();
     try {
-      console.log(investInput);
+      // console.log(investInput);
       const payload = investInput;
       let investUrl = `${endpoints.INVEST_IN_PROJECT}${id}`;
       let investResponse = await investProject(investUrl, payload);
@@ -135,8 +130,8 @@ useEffect(() => {
           transition: Slide,
         });
         setShow(false);
-
-        console.log("success");
+        addToInvest();
+        // console.log("success");
         setInvestInput({
           full_name: "",
           account_no: "",
@@ -151,18 +146,31 @@ useEffect(() => {
     }
   };
 
+  const addToInvest = async () => {
+    try {
+      let investUrl = `${endpoints.ADD_INVESTMENT}${id}`;
+      let investResponse = await investProject(investUrl);
+      let { response, error } = investResponse;
+      if (!error && response) {
+        console.log("Successfully added to invest");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getSingleProject();
     getProjectUpdates();
     getProfile();
   }, [id]);
 
-
   // console.log(project);
 
   const navObj = [
-    { text: "Home", link: "/" },
-    { text: "Projects", link: "/investor/projects" },
+    { text: "Dashboard", link: "/investor/home" },
+    { text: "My Projects", link: "/investor/projects" },
+    { text: "Payments", link: "/investor/payments" },
     { text: "Messages", link: "/innovator/messages" },
   ];
   return (

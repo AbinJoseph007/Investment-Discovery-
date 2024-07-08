@@ -13,32 +13,42 @@ import InnovatorHome from "./Innovator/InnovatorHome/InnovatorHome";
 import { InvestorHome } from "./Investor/InvestorHome/InvestorHome";
 import ProjectviewSkeleton from "./CommonComponents/Card Skeleton/ProjectviewSkeleton";
 import About from "./CommonComponents/Home/About";
-import InvestedProjects from "./Investor/InvestorProjects/InvestedProjects";
+import InvestedProjects from "./Investor/InvestedProjects/InvestedProjects";
+import PaymentHistory from "./Investor/paymentHistory/PaymentHistory";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home />} />
         <Route path="/auth" element={<InnovatorAuth />}></Route>
         <Route path="/projectview/:id" element={<ProjectView />} />
         <Route path="/allProjects" element={<InvestorProjects />}></Route>
         <Route path="/profile" element={<InnovatorProfile />}></Route>
         <Route path="/aboutus" element={<About />}></Route>
 
-
         {/* Innovator */}
         <Route path="/profile-edit" element={<InnovatorProfileEdit />}></Route>
-        <Route path="/innovator/projects" element={<InnovatorProjects />}></Route>
-        <Route path="/innovator/messages" element={<InnovatorMessages />}></Route>
+        <Route
+          path="/innovator/projects"
+          element={<InnovatorProjects />}
+        ></Route>
+        <Route
+          path="/innovator/messages"
+          element={<InnovatorMessages />}
+        ></Route>
         <Route path="/innovator/home" element={<InnovatorHome />}></Route>
-      
+
         {/* Investor */}
-        <Route path="/investor/home" element={<InvestorHome/>}></Route>
-        <Route path="/investor/project" element={<InvestorProjects/>}></Route>
-        <Route path="/investor/project/:id" element={<InvestorProjectView />}></Route>
-        <Route path="/investor/projects" element={<InvestedProjects/>}></Route>
-        <Route path="/abcd" element={<ProjectviewSkeleton/>}></Route>
+        <Route path="/investor/home" element={<InvestorHome />}></Route>
+        <Route path="/investor/project" element={<InvestorProjects />}></Route>
+        <Route
+          path="/investor/project/:id"
+          element={<InvestorProjectView />}
+        ></Route>
+        <Route path="/investor/projects" element={<InvestedProjects />}></Route>
+        <Route path="/investor/payments" element={<PaymentHistory />}></Route>
+        <Route path="/abcd" element={<ProjectviewSkeleton />}></Route>
       </Routes>
     </>
   );

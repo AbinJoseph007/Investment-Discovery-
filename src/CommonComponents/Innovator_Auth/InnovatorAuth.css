@@ -10,11 +10,11 @@
   box-shadow: 1.5px 1.5px 3px #0e0e0e, -1.5px -1.5px 3px rgb(95 94 94 / 25%),
     inset 0px 0px 0px #0e0e0e, inset 0px -0px 0px #5f5e5e;
 }
-.row img{
+/* .row img{
   position: relative;
   height: 750px;
   width: 100%;
-}
+} */
 .slider{
   position: absolute;
   top: 80px;

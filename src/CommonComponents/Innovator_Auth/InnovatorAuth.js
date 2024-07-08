@@ -54,7 +54,6 @@ function InnovatorAuth() {
     console.log(selectUserType.user_type);
     return (
       <Form.Select
-     
         className="user-type"
         onChange={(e) =>
           setSelectUserType({ ...selectUserType, user_type: e.target.value })
@@ -203,12 +202,12 @@ function InnovatorAuth() {
 
   return (
     <div className="row">
-      <img   src="https://static.vecteezy.com/system/resources/previews/030/223/374/large_2x/black-and-white-background-of-financial-charts-generative-ai-free-photo.jpg"/>
-      
-    {/* <div className="container auth-body"> */}
+      <img src="https://static.vecteezy.com/system/resources/previews/030/223/374/large_2x/black-and-white-background-of-financial-charts-generative-ai-free-photo.jpg" />
+
+      {/* <div className="container auth-body"> */}
       <div className="slider">
         {showRegister ? (
-          <form className="form"  >
+          <form className="form">
             <span className="title">Sign Up</span>
             <div className="form_control">
               <input
@@ -282,13 +281,13 @@ function InnovatorAuth() {
             <button onClick={(e) => handleRegister(e)}>Sign Up</button>
             <span className="bottom_text">
               Already have an account?{" "}
-              <label
+              <a
                 htmlFor="register_toggle"
                 onClick={signIn}
                 className="switch"
               >
                 Sign In
-              </label>
+              </a>
             </span>
           </form>
         ) : (
@@ -319,15 +318,15 @@ function InnovatorAuth() {
             <button onClick={(e) => handleLogin(e)}>Login</button>
             <span className="bottom_text" onClick={signup}>
               Don't have an account?{" "}
-              <label htmlFor="register_toggle" className="switch">
+              <a htmlFor="register_toggle" className="switch">
                 Sign Up
-              </label>
+              </a>
             </span>
           </form>
         )}
       </div>
       <ToastContainer />
-    {/* </div> */}
+      {/* </div> */}
     </div>
   );
 }

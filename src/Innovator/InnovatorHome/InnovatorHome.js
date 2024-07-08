@@ -82,13 +82,13 @@ function InnovatorHome() {
     }
   };
 
-  // ADD PROJECTS
-
+  //HANDLE INPUTS
   const handleInput = (e) => {
     const { name, value } = e.target;
     setProjectData({ ...projectData, [name]: value });
   };
 
+  // ADD PROJECTS
   const addProject = async () => {
     const formData = new FormData();
     formData.append("project_name", projectData.project_name);
@@ -133,7 +133,6 @@ function InnovatorHome() {
   };
 
   // HANDLE IMAGE
-
   const handleImage = (e) => {
     const file = e.target.files[0];
     setPhoto(file);
@@ -143,8 +142,7 @@ function InnovatorHome() {
     }));
   };
 
-  // __________________________________________________________________________________________________________________________________
-
+  // ___________________________________________________________________________________________________________________
   // ADD CATEGORY
 
   const options = cat.map((category) => ({
