@@ -9,6 +9,9 @@ import {
   Spinner,
 } from "react-bootstrap";
 import Header from "../../CommonComponents/Header/Header";
+import { endpoints } from "../../services/defaults";
+import useApi from "../../hooks/useApi";
+
 function InnovatorMessages() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [id, setId] = useState("");
@@ -16,8 +19,14 @@ function InnovatorMessages() {
   const [msgLoading, setMsgLoading] = useState(true);
   const [dMsgLoading, setDMsgLoading] = useState(true);
 
+  const navObj = [
+    { text: "Dashboard", link: "/investor/home" },
+    { text: "My Projects", link: "/investor/projects" },
+    { text: "Payments", link: "/investor/payments" },
+    { text: "Messages", link: "/innovator/messages" },
+  ];
+
   useEffect(() => {
-    
     if (searchParams) {
       setId(searchParams.get("id"));
     }
@@ -64,7 +73,7 @@ function InnovatorMessages() {
     { id: 13, type: "sent", user: 3, content: "Hello11" },
     { id: 14, type: "sent", user: 3, content: "Hello12" },
   ];
-  console.log(id);
+  // console.log(id);
   const handleSelectUser = (id) => {
     setSearchParams({ id });
   };
@@ -140,10 +149,32 @@ function InnovatorMessages() {
       </div>
     );
   };
+
+  //SEND MESSAGE
+  const [messageInput, setMessageInput] = useState("");
+  const { request: sendMessage } = useApi("post");
+  const ids = 38;
+  const handleSendMessage = async () => {
+    try {
+      const url = `${endpoints.SEND_MESSAGE}${ids}`;
+      let messageResponse;
+      const payload = {
+        message: messageInput,
+      };
+      messageResponse = await sendMessage(url, payload);
+      let { response, error } = messageResponse;
+      if (!error && response) {
+        setMessageInput("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="sticky-top">
-        <Header />
+        <Header/>
       </div>
       <>
         <div className="msg-grid  bg-dark border  border-dark ">
@@ -211,11 +242,18 @@ function InnovatorMessages() {
 
             <div className="msg-input-box w-100">
               <InputGroup className="rounded-4">
-                <textarea
+                <input
                   className="form-control msg-input  border border-black"
                   placeholder="Type your message here..."
+                  onChange={(e) => {
+                    setMessageInput(e.target.value);
+                  }}
                 />
-                <Button variant="dark" className="px-4">
+                <Button
+                  variant="dark"
+                  className="px-4"
+                  onClick={handleSendMessage}
+                >
                   <i className="fa-regular fa-paper-plane fa-xl"></i>
                 </Button>
               </InputGroup>

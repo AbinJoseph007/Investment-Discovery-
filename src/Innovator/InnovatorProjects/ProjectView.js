@@ -34,7 +34,7 @@ function ProjectView() {
   const handleShow = () => setShow(true);
 
   const navObj = [
-    { text: "Home", link: "/" },
+    { text: "Dashboard", link: "/innovator/home" },
     { text: "My Projects", link: "/innovator/projects" },
     { text: "Messages", link: "/innovator/messages" },
   ];
@@ -44,10 +44,10 @@ function ProjectView() {
       const url = `${endpoints.PROJECT_VIEW}${id}`;
       const apiResponse = await projectview(url);
       const { response, error } = apiResponse;
-      console.log(response);
+      // console.log(response);
       if (!error && response) {
         setProject(response.data[0]);
-        console.log(response.data[0]);
+        // console.log(response.data[0]);
       }
     } catch (error) {
       console.error("Failed to fetch project", error);
@@ -80,7 +80,7 @@ function ProjectView() {
     getInvestorDetails();
   }, []);
 
-  console.log("invest", investors);
+  // console.log("invest", investors);
 
   if (!project)
     return (
@@ -96,9 +96,9 @@ function ProjectView() {
         update_message: updateInput.update_message,
       };
       const apiResponse = await UpdateProject(url, payload);
-      console.log(apiResponse);
+      // console.log(apiResponse);
       const { response, error } = apiResponse;
-      console.log(response, "message");
+      // console.log(response, "message");
       if (!error && response) {
         // setProject(response.data[0]);
         getSingleProject();

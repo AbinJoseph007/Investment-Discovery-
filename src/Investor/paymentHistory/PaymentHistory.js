@@ -23,7 +23,7 @@ function PaymentHistory() {
 
   //   GET PAYMENT HISTORY FUNCTION
   const getPaymentHistory = async () => {
-    console.log("first");
+    // console.log("first");
     try {
       let url = `${endpoints.PAYMENT_HISTORY}`;
       let apiResponse = await getPayment(url);

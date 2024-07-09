@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../CommonComponents/Header/Header";
-import { Card, Col, Container, ProgressBar, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  ProgressBar,
+  Row,
+} from "react-bootstrap";
 import useApi from "../../hooks/useApi";
 import { endpoints } from "../../services/defaults";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function InvestedProjects() {
   const navObj = [
@@ -14,16 +21,17 @@ function InvestedProjects() {
   ];
 
   const { request: investedProjects } = useApi("get");
-  const [investedProject, setInvestedProject] = useState("");
+  const [investedProject, setInvestedProject] = useState({});
+  console.log("investedprojects", investedProject);
   const { id } = useParams();
   const getInvestedProjects = async () => {
     try {
-      const getInvestedProjectsUrl = `${endpoints.GET_INVESTOR_LIST}${id}`;
+      const getInvestedProjectsUrl = `${endpoints.GET_INVESTMENTS}`;
       let InvestedProjectsDetails = await investedProjects(
         getInvestedProjectsUrl
       );
       const { response, error } = InvestedProjectsDetails;
-      console.log(response);
+      setInvestedProject(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -38,25 +46,45 @@ function InvestedProjects() {
         <Header navObj={navObj} />
       </div>
       <Container>
-        <Row
-          className="mt-5
-        "
-        >
+        <h3 className="mt-3">Invested Projects</h3>
+        <Row>
           <Col lg={4} sm={6} className="p-3">
-            <Card className="rounded-0 border-0 text-black grey-card">
-              <Card.Img
-                src={`http://127.0.0.1:8000/`}
-                className="project-image rounded-0 m-0"
-              />
-              <Card.Body className="m-0">
-                <h3 className="project-title bg-white py-3 text-center mx-auto">
-                  project-title
-                </h3>
-                <Card.Text style={{ textAlign: "justify" }}></Card.Text>
-                <ProgressBar />
-                <small></small>
-              </Card.Body>
-            </Card>
+            {investedProject?.length > 0 ? (
+              investedProject.map((item, index) => (
+                <Card className="rounded-0 border-1 text-black bg-grey">
+                  <Card.Img
+                    src={`http://127.0.0.1:8000/${item.image}`}
+                    className="project-image rounded-0 m-0"
+                  />
+                  <Card.Body className="m-0">
+                    <h3 className="project-title bg-white py-3 text-center mx-auto">
+                      {item.project_name}
+                    </h3>
+                    <Card.Text style={{ textAlign: "center" }}>
+                      {item.description.slice(0, 100)}
+                    </Card.Text>
+                    <small className="text-center">
+                      <b>Target:</b> ₹{item.amount}
+                    </small>
+
+                    <div className="text-end">
+                      <Link to={`/investor/project/${item.id}`}>
+                        <Button
+                          variant="outline-dark rounded-0"
+                          className="ms-auto "
+                        >
+                          <i className="fa-solid fa-arrow-right"></i>
+                        </Button>
+                      </Link>
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))
+            ) : (
+              <div className="text-danger text-center">
+                <b>No Projects Available....!</b>
+              </div>
+            )}
           </Col>
         </Row>
       </Container>

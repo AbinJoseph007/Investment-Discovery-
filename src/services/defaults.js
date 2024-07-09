@@ -14,6 +14,8 @@ export const endpoints = {
   INVEST_IN_PROJECT: `make/payment/`,
   PAYMENT_HISTORY: `transaction/history/`,
   ADD_INVESTMENT: `Add/Investment/`,
+  GET_INVESTMENTS:`Investment/done/`,
+  SEND_FIRST_MESSAGE: 'send/investor/message/',
 
   // Innovator
 
@@ -29,4 +31,5 @@ export const endpoints = {
   EDIT_PROJECT: `project/`,
   GET_NOTIFICATION: `notified/list/`,
   GET_INVESTOR_LIST: `payed/user/list/`,
+  SEND_MESSAGE: `send/message/`
 };
