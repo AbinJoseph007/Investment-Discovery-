@@ -178,8 +178,8 @@ function InvestorProjectView() {
       messageResponse = await sendMessage(url, payload);
       let { response, error } = messageResponse;
       if (!error && response) {
-        console.log("response", response);
         setInvestorMessage("");
+        handleNotify();
         handleClose1();
         let responseMessage = "Message Succesfully Sent";
         toast.success(responseMessage, {
@@ -193,6 +193,22 @@ function InvestorProjectView() {
           theme: "dark",
           transition: Slide,
         });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // SEND NOTIFICATION
+  const { request: sendNotification } = useApi("post");
+  const handleNotify = async () => {
+    try {
+      const url = `${endpoints.SEND_NOTIFICATION}${project.id}`;
+      let notificationResponse;
+      notificationResponse = await sendNotification(url);
+      const { error, response } = notificationResponse;
+      if (!error && response) {
+        console.log("Notification Sent");
       }
     } catch (error) {
       console.error(error);

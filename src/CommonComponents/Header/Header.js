@@ -19,6 +19,9 @@ import {
 } from "@mui/material";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { IoNotifications } from "react-icons/io5";
+import { endpoints } from "../../services/defaults";
+import useApi from "../../hooks/useApi";
+import { grey } from "@mui/material/colors";
 
 function Header({ navObj }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -58,8 +61,28 @@ function Header({ navObj }) {
     navigate("/");
   };
 
+  const [isHovered, setIsHovered] = useState(false);
+
+  // GET NOTIFICATIONS
+  const { request: getNotification } = useApi("get");
+  const [notification, setNotification] = useState([]);
+  console.log(notification);
+  const handleGetnotification = async () => {
+    try {
+      const url = `${endpoints.GET_NOTIFICATIONS}`;
+      let getNotificationReponse = await getNotification(url);
+      const { response, error } = getNotificationReponse;
+      if (!error && response) {
+        setNotification(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     login();
+    handleGetnotification();
   }, []);
   return (
     <Navbar
@@ -110,8 +133,31 @@ function Header({ navObj }) {
               <Offcanvas.Title>Notifications</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              Some text as placeholder. In real life you can have the elements
-              you have chosen. Like, text, images, lists, etc.
+              {notification?.length > 0 ? (
+                notification.map((item, index) => (
+                  <Link
+                    to={`/innovator/messages/?id=3`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div
+                      style={{
+                        borderBottom: "1px solid lightgrey",
+                        backgroundColor: isHovered ? "lightgrey" : "white",
+                        textAlign: "center",
+                        paddingTop: "10px",
+                      }}
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      <p>You Have One New Message</p>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-danger text-center">
+                  <b>No Notifications Available....!</b>
+                </div>
+              )}
             </Offcanvas.Body>
           </Offcanvas>
           <Nav>
