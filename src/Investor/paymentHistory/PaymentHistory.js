@@ -50,7 +50,6 @@ function PaymentHistory() {
             <thead>
               <tr>
                 <th className="pe-5">Project</th>
-                <th className="pe-5">Project Name</th>
                 <th className="pe-5">Amount</th>
               </tr>
             </thead>
@@ -60,8 +59,7 @@ function PaymentHistory() {
                   <Link to={`/investor/project/${item.project}`}>
                     <td c>{item.project}</td>
                   </Link>
-                  <td className="pe-5">[Project Name]</td>
-                  <td className="pe-5">{item.amount}</td>
+                  <td className="pe-5">₹{item.amount}</td>
                 </tr>
               ))}
             </tbody>

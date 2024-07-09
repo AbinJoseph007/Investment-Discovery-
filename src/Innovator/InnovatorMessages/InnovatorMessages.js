@@ -155,15 +155,16 @@ function InnovatorMessages() {
   const { request: sendMessage } = useApi("post");
   const ids = 38;
   const handleSendMessage = async () => {
+    const payload = {
+      message: messageInput,
+    };
     try {
       const url = `${endpoints.SEND_MESSAGE}${ids}`;
       let messageResponse;
-      const payload = {
-        message: messageInput,
-      };
       messageResponse = await sendMessage(url, payload);
       let { response, error } = messageResponse;
       if (!error && response) {
+        console.log("SENT");
         setMessageInput("");
       }
     } catch (error) {
@@ -174,7 +175,7 @@ function InnovatorMessages() {
   return (
     <>
       <div className="sticky-top">
-        <Header/>
+        <Header />
       </div>
       <>
         <div className="msg-grid  bg-dark border  border-dark ">
@@ -245,6 +246,7 @@ function InnovatorMessages() {
                 <input
                   className="form-control msg-input  border border-black"
                   placeholder="Type your message here..."
+                  value={messageInput}
                   onChange={(e) => {
                     setMessageInput(e.target.value);
                   }}
