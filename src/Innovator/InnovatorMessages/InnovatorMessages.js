@@ -17,16 +17,12 @@ import MessageBubble from "../../CommonComponents/MessageBubble/MessageBubble";
 function InnovatorMessages() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [id, setId] = useState("");
-  const [displayMessages, setDisplayMessages] = useState([]);
-  const [msgLoading, setMsgLoading] = useState(true);
-  const [dMsgLoading, setDMsgLoading] = useState(true);
   const { request: getMessages } = useApi("get");
   const [reload, setReload] = useState(false)
-  
   const [msg,setMsg] = useState([])
- 
   const messagesEndRef = useRef(null);
 
+  // SCROLL TO BOTTOM
   const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -35,10 +31,9 @@ function InnovatorMessages() {
       scrollToBottom();
   }, [msg]);
 
-
-
   const mid=38
 
+  // NAV OBJECT
   const navObj = [
     { text: "Dashboard", link: "/investor/home" },
     { text: "My Projects", link: "/investor/projects" },
@@ -51,14 +46,7 @@ function InnovatorMessages() {
       setId(searchParams.get("id"));
     }
   }, [searchParams]);
-  // useEffect(() => {
-  //   if (id) {
-  //     setDisplayMessages(messages.filter((i) => i.user == id));
-  //   } else {
-  //     setDisplayMessages([]);
-  //   }
-  //   setDMsgLoading(false);
-  // }, [id]);
+
 
   const users = [
     { id: 1, name: "Investor1" },
@@ -66,13 +54,12 @@ function InnovatorMessages() {
     { id: 3, name: "Rich Investor1" },
   ];
 
+  //GET MESSAGES
   const getMessage = async () => {
     try {
 
       const url = `${endpoints.GET_CHAT_HISTORY}${mid}`;
       const { response, error } = await getMessages(url);
-      console.log(response.data);
-      
       if (!error && response.data) {
        const messages = response.data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
         setMsg(messages);
@@ -87,39 +74,8 @@ function InnovatorMessages() {
     setReload(false)
   },[reload])
 
-  console.log('msg',msg);
 
-  // const users=[]
-  // const messages = [
-  //   { id: 1, type: "received", user: 3, content: "Hello1" },
-  //   { id: 2, type: "received", user: 1, content: "Hello2" },
-  //   { id: 3, type: "received", user: 2, content: "Hello3" },
-  //   { id: 4, type: "sent", user: 3, content: "Hello4" },
-  //   { id: 5, type: "received", user: 2, content: "Hello5" },
-  //   { id: 6, type: "sent", user: 3, content: "Hello6" },
-  //   {
-  //     id: 7,
-  //     type: "received",
-  //     user: 2,
-  //     content:
-  //       "Longer message.Longer messageLonger messageLonger message.Longer message",
-  //   },
-  //   {
-  //     id: 8,
-  //     type: "sent",
-  //     user: 2,
-  //     content:
-  //       "Longer message.Longer messageLonger messageLonger message.Longer message. Longer message.Longer messageLonger messageLonger message.Longer messageLonger message.Longer messageLonger messageLonger message.Longer messageLonger message.Longer messageLonger messageLonger message.Longer message",
-  //   },
-  //   { id: 9, type: "sent", user: 3, content: "Hello7" },
-  //   { id: 10, type: "sent", user: 3, content: "Hello8" },
-  //   { id: 11, type: "sent", user: 3, content: "Hello9" },
-  //   { id: 12, type: "sent", user: 3, content: "Hello10" },
-  //   { id: 13, type: "sent", user: 3, content: "Hello11" },
-  //   { id: 14, type: "sent", user: 3, content: "Hello12" },
-  // ];
-  // console.log(id);
-
+  
   const handleSelectUser = (id) => {
     setSearchParams({ id });
   };
@@ -210,7 +166,6 @@ function InnovatorMessages() {
       messageResponse = await sendMessage(url, payload);
       let { response, error } = messageResponse;
       if (!error && response) {
-        console.log("SENT");
         setMessageInput("");
         setReload(true)
       }
@@ -254,30 +209,6 @@ function InnovatorMessages() {
             )}
           </div>
           <div className="msg-right bg-light" style={{ position: "relative", overflowY: "scroll"}}>
-            {/* <div>
-              {id ? (
-                dMsgLoading ? (
-                  <div className="w-100 text-center py-5">
-                    <Spinner animation="grow" size="lg" />
-                  </div>
-                ) : msg.length > 0 ? (
-                  <div className="msg-container p-3">
-                    {msg.map((i) => (
-                     <div>{i.message}</div> 
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-secondary p-5 text-center">
-                    You have no message history with this user. Say something to
-                    start conversation.
-                  </p>
-                )
-              ) : (
-                <p className="text-secondary p-5 text-center">
-                  Select a user to send messages
-                </p>
-              )}
-            </div> */}
 
             <div style={{ overflowY: "scroll"}} ref={scrollToBottom} >{msg?.length>0?msg.map((item) => (
               <MessageBubble message={item} own={item.receiver===mid} />
