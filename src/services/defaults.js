@@ -34,4 +34,5 @@ export const endpoints = {
   GET_INVESTOR_LIST: `payed/user/list/`,
   SEND_MESSAGE: `send/message/`,
   GET_NOTIFICATIONS: `notification/view`,
+  GET_CHAT_HISTORY: `/Chat/History/`
 };
