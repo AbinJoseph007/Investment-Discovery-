@@ -66,7 +66,6 @@ function Header({ navObj }) {
   // GET NOTIFICATIONS
   const { request: getNotification } = useApi("get");
   const [notification, setNotification] = useState([]);
-  console.log(notification);
   const handleGetnotification = async () => {
     try {
       const url = `${endpoints.GET_NOTIFICATIONS}`;
@@ -79,6 +78,27 @@ function Header({ navObj }) {
       console.error(error);
     }
   };
+
+  // CONFIRM NOTIFICATION
+  const { request: confirmNotification } = useApi("get");
+  const [currentId, setCurrentId] = useState("");
+  const handleConfirmNotification = async () => {
+    try {
+      const url = `${endpoints.CONFIRM_NOTIFIACTION}${currentId}`;
+      let confirmNotificationReponse = await confirmNotification(url);
+      const { response, error } = confirmNotificationReponse;
+      if (!error && response) {
+        navigate(`/innovator/messages/`);
+        console.log("NOTIFICATION CONFIRMED");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleConfirmNotification();
+  }, [currentId]);
 
   useEffect(() => {
     login();
@@ -135,23 +155,27 @@ function Header({ navObj }) {
             <Offcanvas.Body>
               {notification?.length > 0 ? (
                 notification.map((item, index) => (
-                  <Link
-                    to={`/innovator/messages/?id=3`}
-                    style={{ textDecoration: "none" }}
+                  <div
+                    style={{
+                      borderBottom: "1px solid lightgrey",
+                      backgroundColor: isHovered ? "lightgrey" : "white",
+                      textAlign: "center",
+                      paddingTop: "10px",
+                    }}
+                    onClick={() => {
+                      if (item && item.id) {
+                        setCurrentId(item.id);
+                      } else {
+                        console.warn(
+                          "Notification or notification ID is undefined."
+                        );
+                      }
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
-                    <div
-                      style={{
-                        borderBottom: "1px solid lightgrey",
-                        backgroundColor: isHovered ? "lightgrey" : "white",
-                        textAlign: "center",
-                        paddingTop: "10px",
-                      }}
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
-                    >
-                      <p>You Have One New Message</p>
-                    </div>
-                  </Link>
+                    <p>You Have One New Message</p>
+                  </div>
                 ))
               ) : (
                 <div className="text-danger text-center">

@@ -13,30 +13,21 @@ import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
 import MessageBubble from "../../CommonComponents/MessageBubble/MessageBubble";
 
-function InnovatorMessages() {
+function InvestorMessages() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [id, setId] = useState("");
   const { request: getMessages } = useApi("get");
   const [reload, setReload] = useState(false);
   const [msg, setMsg] = useState([]);
+
   const messagesEndRef = useRef(null);
-
-  // SCROLL TO BOTTOM
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [msg]);
-
-  const mid = 38;
 
   // NAV OBJECT
   const navObj = [
-    { text: "Dashboard", link: "/innovator/home" },
-    { text: "My Projects", link: "/innovator/projects" },
-    { text: "Messages", link: "/innovator/messages" },
+    { text: "Dashboard", link: "/investor/home" },
+    { text: "My Projects", link: "/investor/projects" },
+    { text: "Payments", link: "/investor/payments" },
+    { text: "Messages", link: "/investor/messages" },
   ];
 
   useEffect(() => {
@@ -151,7 +142,6 @@ function InnovatorMessages() {
   //SEND MESSAGE
   const [messageInput, setMessageInput] = useState("");
   const { request: sendMessage } = useApi("post");
-  const ids = 38;
   const handleSendMessage = async () => {
     const payload = {
       message: messageInput,
@@ -172,13 +162,14 @@ function InnovatorMessages() {
 
   // GET MESSAGELIST
   const [messageList, setMessageList] = useState([]);
-  const { request: getMessageList } = useApi("get");
+  console.log(messageList);
+  const { request: getMessageListInvestor } = useApi("get");
   const handleGetMessageList = async () => {
     try {
-      const url = `${endpoints.GET_MESSAGE_LIST}`;
-      let messageListResponse;
-      messageListResponse = await getMessageList(url);
-      let { response, error } = messageListResponse;
+      const url = `${endpoints.GET_MESSAGE_LIST_INVESTOR}`;
+      let messageListInvestorResponse;
+      messageListInvestorResponse = await getMessageListInvestor(url);
+      let { response, error } = messageListInvestorResponse;
       if (!error && response) {
         setReload(true);
         setMessageList(response.data);
@@ -233,10 +224,7 @@ function InnovatorMessages() {
               overflowY: "scroll",
             }}
           >
-            <div
-              style={{ overflowY: "scroll", minHeight: "75vh" }}
-              ref={scrollToBottom}
-            >
+            <div style={{ overflowY: "scroll", minHeight: "75vh" }}>
               {msg?.length > 0
                 ? msg.map((item) => (
                     <MessageBubble message={item} own={item.sender != id} />
@@ -273,4 +261,4 @@ function InnovatorMessages() {
   );
 }
 
-export default InnovatorMessages;
+export default InvestorMessages;

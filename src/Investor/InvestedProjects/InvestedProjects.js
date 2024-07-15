@@ -17,7 +17,7 @@ function InvestedProjects() {
     { text: "Dashboard", link: "/investor/home" },
     { text: "My Projects", link: "/investor/projects" },
     { text: "Payments", link: "/investor/payments" },
-    { text: "Messages", link: "/innovator/messages" },
+    { text: "Messages", link: "/investor/messages" },
   ];
 
   const { request: investedProjects } = useApi("get");

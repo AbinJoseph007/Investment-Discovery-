@@ -44,6 +44,12 @@ function InnovatorHome() {
     getProjects();
   }, []);
 
+  const navObj = [
+    { text: "Dashboard", link: "/innovator/home" },
+    { text: "My Projects", link: "/innovator/projects" },
+    { text: "Messages", link: "/innovator/messages" },
+  ];
+
   const getProjects = async () => {
     try {
       const url = `${endpoints.GET_INNOVATOR_PROJECTS}`;
@@ -62,9 +68,9 @@ function InnovatorHome() {
   const fetchAsideItems = () => {
     const asideObj = [
       { text: "Home", link: "/", icon: "th-large" },
-
       { text: "My Projects", link: "/innovator/projects", icon: "columns" },
       { text: "Messages", link: "/innovator/messages", icon: "envelope" },
+      { text: "Investors", link: "/innovator/meetInvestors", icon: "envelope" },
     ];
 
     return <Aside asideObj={asideObj} />;
@@ -208,6 +214,7 @@ function InnovatorHome() {
             </Col>
           </Row>
 
+          {/* PROJECT LIST */}
           <div className="mt-2">
             <h3>My Projects</h3>
             <br />
@@ -219,7 +226,6 @@ function InnovatorHome() {
                       <th>Project Name</th>
                       <th>Target Amount</th>
                       <th>DeadLine</th>
-                      <th>Investors</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -228,36 +234,6 @@ function InnovatorHome() {
                         <td>{project.project_name}</td>
                         <td>{project.amount}</td>
                         <td>{project.end_date}</td>
-                        <td style={{ alignItems: "center" }}>
-                          {" "}
-                          <AvatarGroup sx={{ width: 24, height: 24 }}>
-                            <Avatar
-                              sx={{ width: 30, height: 30 }}
-                              alt="Remy Sharp"
-                              src="/static/images/avatar/1.jpg"
-                            />
-                            <Avatar
-                              sx={{ width: 30, height: 30 }}
-                              alt="Travis Howard"
-                              src="/static/images/avatar/2.jpg"
-                            />
-                            <Avatar
-                              sx={{ width: 30, height: 30 }}
-                              alt="Cindy Baker"
-                              src="/static/images/avatar/3.jpg"
-                            />
-                            <Avatar
-                              sx={{ width: 30, height: 30 }}
-                              alt="Agnes Walker"
-                              src="/static/images/avatar/4.jpg"
-                            />
-                            <Avatar
-                              sx={{ width: 30, height: 30 }}
-                              alt="Trevor Henderson"
-                              src="/static/images/avatar/5.jpg"
-                            />
-                          </AvatarGroup>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -277,7 +253,7 @@ function InnovatorHome() {
               <div className="text-danger text-center mt-5">
                 {" "}
                 <p>
-                  <b>No Projects Added Yet ...!</b>
+                  <b>No Projects Added Yet!</b>
                 </p>
               </div>
             )}
@@ -285,6 +261,7 @@ function InnovatorHome() {
         </div>
       </div>
 
+      {/* MODAL FOR ADD PROJECT */}
       <Modal
         show={show}
         onHide={() => setShow(false)}

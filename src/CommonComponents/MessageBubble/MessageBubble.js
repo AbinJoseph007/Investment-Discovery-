@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 
 function MessageBubble({ message, own }) {
-  const [user, setUser] = useState(sessionStorage.getItem("existingUser"));
   return (
     <>
       <div

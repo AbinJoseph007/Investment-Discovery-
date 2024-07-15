@@ -17,6 +17,7 @@ export const endpoints = {
   GET_INVESTMENTS: `Investment/done/`,
   SEND_FIRST_MESSAGE: `send/investor/message/`,
   SEND_NOTIFICATION: `project/notify/`,
+  GET_MESSAGE_LIST_INVESTOR: `send/message/rcv/`,
 
   // Innovator
 
@@ -31,8 +32,12 @@ export const endpoints = {
   UPDATE_PROJECT: `update/`,
   EDIT_PROJECT: `project/`,
   GET_NOTIFICATION: `notified/list/`,
+  CONFIRM_NOTIFIACTION: `confirm/notify/`,
   GET_INVESTOR_LIST: `payed/user/list/`,
   SEND_MESSAGE: `send/message/`,
   GET_NOTIFICATIONS: `notification/view`,
-  GET_CHAT_HISTORY: `/Chat/History/`
+  GET_CHAT_HISTORY: `/Chat/History/`,
+  GET_MESSAGE_LIST: `/notified/list/`,
+  GET_ALL_INVESTORS: `/total/investors/`,
+  GET_INVESTOR_PROFILE: `/individual/investors/`,
 };

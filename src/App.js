@@ -15,6 +15,9 @@ import ProjectviewSkeleton from "./CommonComponents/Card Skeleton/ProjectviewSke
 import About from "./CommonComponents/Home/About";
 import InvestedProjects from "./Investor/InvestedProjects/InvestedProjects";
 import PaymentHistory from "./Investor/paymentHistory/PaymentHistory";
+import InvestorMessages from "./Investor/InvestorMessages/InvestorMessages";
+import Meetinvestors from "./Innovator/MeetInvestors.js/Meetinvestors";
+import InvestorProfilePage from "./Innovator/MeetInvestors.js/InvestorProfilePage";
 
 function App() {
   return (
@@ -38,6 +41,14 @@ function App() {
           element={<InnovatorMessages />}
         ></Route>
         <Route path="/innovator/home" element={<InnovatorHome />}></Route>
+        <Route
+          path="/innovator/meetInvestors"
+          element={<Meetinvestors />}
+        ></Route>
+        <Route
+          path="/innovator/InvestorProfile/:id"
+          element={<InvestorProfilePage />}
+        ></Route>
 
         {/* Investor */}
         <Route path="/investor/home" element={<InvestorHome />}></Route>
@@ -49,6 +60,7 @@ function App() {
         <Route path="/investor/projects" element={<InvestedProjects />}></Route>
         <Route path="/investor/payments" element={<PaymentHistory />}></Route>
         <Route path="/abcd" element={<ProjectviewSkeleton />}></Route>
+        <Route path="/investor/messages" element={<InvestorMessages />}></Route>
       </Routes>
     </>
   );
