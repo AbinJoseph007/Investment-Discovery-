@@ -19,15 +19,16 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarGroup } from "@mui/material";
 
 function InnovatorHome() {
+  const navObj = [
+    { text: "Dashboard", link: "/innovator/home" },
+    { text: "My Projects", link: "/innovator/projects" },
+    { text: "Messages", link: "/innovator/messages" },
+  ];
+
   const [iPreviews, setIPreviews] = useState([]);
   const [vPreviews, setVPreviews] = useState([]);
   const [show, setShow] = useState(false);
   const [cat, setCat] = useState([]);
-  // const [innovatorProjects, setInnovatorProjects] = useState([]);
-  const { request: getCategory } = useApi("get");
-  const { request: addCategory } = useApi("post");
-  const { request: addProjects } = useApi("mPost");
-
   const [photo, setPhoto] = useState(null);
   const [projectData, setProjectData] = useState({
     project_name: "",
@@ -40,27 +41,9 @@ function InnovatorHome() {
   const { request: getInnovatorProjects } = useApi("hget");
   const [innovatorProjects, setInnovatorProjects] = useState([]);
 
-  useEffect(() => {
-    getProjects();
-  }, []);
-
-  const navObj = [
-    { text: "Dashboard", link: "/innovator/home" },
-    { text: "My Projects", link: "/innovator/projects" },
-    { text: "Messages", link: "/innovator/messages" },
-  ];
-
-  const getProjects = async () => {
-    try {
-      const url = `${endpoints.GET_INNOVATOR_PROJECTS}`;
-      const { response, error } = await getInnovatorProjects(url);
-      if (!error && response) {
-        setInnovatorProjects(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { request: getCategory } = useApi("get");
+  const { request: addCategory } = useApi("post");
+  const { request: addProjects } = useApi("mPost");
 
   const uploadImage =
     "https://static.vecteezy.com/system/resources/thumbnails/002/058/031/small_2x/picture-icon-photo-symbol-illustration-for-web-and-mobil-app-on-grey-background-free-vector.jpg";
@@ -76,6 +59,24 @@ function InnovatorHome() {
     return <Aside asideObj={asideObj} />;
   };
 
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  // GET PROJECTS
+  const getProjects = async () => {
+    try {
+      const url = `${endpoints.GET_INNOVATOR_PROJECTS}`;
+      const { response, error } = await getInnovatorProjects(url);
+      if (!error && response) {
+        setInnovatorProjects(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // GET CATEGORIES
   const getCategories = async () => {
     try {
       const url = `${endpoints.GET_CATEGORY}`;
@@ -147,8 +148,7 @@ function InnovatorHome() {
       image: file,
     }));
   };
-
-  // ___________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________
   // ADD CATEGORY
 
   const options = cat.map((category) => ({
@@ -173,8 +173,6 @@ function InnovatorHome() {
       setProjectData({ ...projectData, category: newValue.value });
     }
   };
-
-  // __________________________________________________________________________________________________________________________________
 
   useEffect(() => {
     getCategories();

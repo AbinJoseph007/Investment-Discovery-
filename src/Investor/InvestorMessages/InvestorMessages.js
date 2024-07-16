@@ -225,11 +225,15 @@ function InvestorMessages() {
             }}
           >
             <div style={{ overflowY: "scroll", minHeight: "75vh" }}>
-              {msg?.length > 0
-                ? msg.map((item) => (
-                    <MessageBubble message={item} own={item.sender != id} />
-                  ))
-                : "no data"}
+              {msg?.length > 0 ? (
+                msg.map((item) => (
+                  <MessageBubble message={item} own={item.sender != id} />
+                ))
+              ) : (
+                <h4 className="text-center pt-3">
+                  Please Select an Innovator to Chat
+                </h4>
+              )}
             </div>
 
             <div className="msg-input-box w-100">

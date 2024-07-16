@@ -215,7 +215,6 @@ function InnovatorProjects() {
       setReload(false);
       getCategories();
       getProjects();
-      
     }, 1000);
   }, [reload]);
 
@@ -266,17 +265,8 @@ function InnovatorProjects() {
         <Header navObj={navObj} />
       </div>
       <div className="main-div ">
-        <Container className="p-lg-5 p-2 text-center">
-          <Button
-            onClick={showAddProjectForm}
-            variant="outline-dark rounded-0 py-3 px-4"
-            className="mx-auto d-flex align-items-center"
-          >
-            <span className="hidden">
-              Add a project&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <i className="fa-solid fa-plus fa-xl"></i>
-          </Button>
+        <Container className="p-lg-5 p-2">
+          <h3 className="pt-5 ps-2">Meet The Investors</h3>
 
           <Row>
             {innovatorProjects.length > 0 ? (
@@ -343,6 +333,16 @@ function InnovatorProjects() {
               </div>
             )}
           </Row>
+          <Button
+            onClick={showAddProjectForm}
+            variant="outline-dark rounded-0 py-3 px-4"
+            className="mx-auto d-flex align-items-center"
+          >
+            <span className="hidden">
+              Add a project&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <i className="fa-solid fa-plus fa-xl"></i>
+          </Button>
         </Container>
       </div>
 
