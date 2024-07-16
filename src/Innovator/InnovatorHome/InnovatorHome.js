@@ -72,7 +72,7 @@ function InnovatorHome() {
         setInnovatorProjects(response.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -85,7 +85,7 @@ function InnovatorHome() {
         setCat(response.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -108,7 +108,6 @@ function InnovatorHome() {
     try {
       const url = `${endpoints.ADD_PROJECT}`;
       const { response, error } = await addProjects(url, formData);
-      console.log("response for add", response);
       if (!error && response) {
         toast.success("Project Added Successfully", {
           position: "bottom-center",
@@ -135,7 +134,7 @@ function InnovatorHome() {
         getProjects();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -148,14 +147,14 @@ function InnovatorHome() {
       image: file,
     }));
   };
-___________________________________________________________________________________________________________________
-  // ADD CATEGORY
 
+  //ADD CATEGORY
   const options = cat.map((category) => ({
     value: category.id,
     label: category.c_name,
   }));
 
+  // HANDLE CATEGORY CHANGE
   const handleCategoryChange = async (newValue, actionMeta) => {
     if (actionMeta.action === "create-option") {
       try {
@@ -167,7 +166,7 @@ ________________________________________________________________________________
           setProjectData({ ...projectData, category: response.data.id });
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else if (actionMeta.action === "select-option") {
       setProjectData({ ...projectData, category: newValue.value });
