@@ -8,26 +8,6 @@ import useApi from "../../hooks/useApi";
 import "./InvestorProfile.css";
 
 function InvestorProfilePage({ investor }) {
-  const { id } = useParams();
-  const { request: GetInvestors } = useApi("get");
-  console.log(investor);
-  const getSingleProfile = async () => {
-    try {
-      const url = `${endpoints.GET_INVESTOR_PROFILE}${id}`;
-      const apiResponse = await GetInvestors(url);
-      const { response, error } = apiResponse;
-      console.log(response.data);
-      if (!error && response) {
-        setInvestor(response.data[0]);
-      }
-    } catch (error) {
-      console.error("Failed to fetch Profile", error);
-    }
-  };
-  useEffect(() => {
-    getSingleProfile();
-  }, [id]);
-
   return (
     <div>
       <div class="container mt-2 mb-2 d-flex">

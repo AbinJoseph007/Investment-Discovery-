@@ -18,18 +18,13 @@ import useApi from "../../hooks/useApi";
 import { endpoints } from "../../services/defaults";
 import CreatableSelect from "react-select/creatable";
 import { ToastContainer, toast, Bounce } from "react-toastify";
-import CardSkeleton from "../../CommonComponents/Card Skeleton/CardSkeleton";
-import { Update } from "@mui/icons-material";
 import Header from "../../CommonComponents/Header/Header";
 
 function InnovatorProjects() {
-  const [iPreviews, setIPreviews] = useState([]);
-  const [vPreviews, setVPreviews] = useState([]);
   const [show, setShow] = useState(false);
   const [cat, setCat] = useState([]);
   const [innovatorProjects, setInnovatorProjects] = useState([]);
   const [isEditForm, setIsEditForm] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(false);
 
   const { request: getCategory } = useApi("get");
@@ -50,8 +45,6 @@ function InnovatorProjects() {
   });
 
   const [inputValue, setInputValue] = useState("");
-
-  // console.log(projectData);
 
   const navObj = [
     { text: "Dashboard", link: "/innovator/home" },
@@ -75,7 +68,7 @@ function InnovatorProjects() {
         setCat(response.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -83,7 +76,6 @@ function InnovatorProjects() {
     setIsEditForm(true);
     setShow(true);
     setPhoto(null);
-    // console.log(project);
     setProjectData(project);
   };
 
@@ -105,7 +97,6 @@ function InnovatorProjects() {
     try {
       const url = `${endpoints.ADD_PROJECT}`;
       const { response, error } = await addProjects(url, formData);
-      // console.log(response, error);
       if (!error && response) {
         toast.success("Project Added Successfully", {
           position: "bottom-center",
@@ -132,7 +123,7 @@ function InnovatorProjects() {
         getProjects();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -152,6 +143,7 @@ function InnovatorProjects() {
     label: category.c_name,
   }));
 
+  //CATEGORY CHANGE
   const handleCategoryChange = async (newValue, actionMeta) => {
     if (actionMeta.action === "create-option") {
       try {
@@ -164,7 +156,7 @@ function InnovatorProjects() {
           setProjectData({ ...projectData, category: createdCategory.id });
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else if (actionMeta.action === "select-option") {
       setProjectData({ ...projectData, category: newValue.value });
@@ -178,10 +170,9 @@ function InnovatorProjects() {
       const { response, error } = await getInnovatorProjects(url);
       if (!error && response) {
         setInnovatorProjects(response.data);
-        console.log(response.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -204,9 +195,8 @@ function InnovatorProjects() {
         theme: "light",
         transition: Bounce,
       });
-      // console.log(apiResponse);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -228,7 +218,6 @@ function InnovatorProjects() {
     formData.append("end_date", projectData.end_date);
     formData.append("category", projectData.category);
     if (projectData.image instanceof File) {
-      // Check if it's a file
       formData.append("image", projectData.image);
     }
 
@@ -247,14 +236,13 @@ function InnovatorProjects() {
           theme: "light",
           transition: Bounce,
         });
-
         setShow(false);
         getProjects();
       } else {
         toast.error("Failed to update project");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to update project");
     }
   };

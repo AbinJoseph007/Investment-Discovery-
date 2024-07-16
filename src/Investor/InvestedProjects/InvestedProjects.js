@@ -13,6 +13,7 @@ import { endpoints } from "../../services/defaults";
 import { Link, useParams } from "react-router-dom";
 
 function InvestedProjects() {
+  //NAV OBJECTS
   const navObj = [
     { text: "Dashboard", link: "/investor/home" },
     { text: "My Projects", link: "/investor/projects" },
@@ -20,9 +21,9 @@ function InvestedProjects() {
     { text: "Messages", link: "/investor/messages" },
   ];
 
+  //GET INVESTED PROJECTS
   const { request: investedProjects } = useApi("get");
   const [investedProject, setInvestedProject] = useState({});
-  console.log("investedprojects", investedProject);
   const { id } = useParams();
   const getInvestedProjects = async () => {
     try {
@@ -33,13 +34,16 @@ function InvestedProjects() {
       const { response, error } = InvestedProjectsDetails;
       setInvestedProject(response.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
+  //USEEFFECT TO FETCH INVESTED PROJECTS
   useEffect(() => {
     getInvestedProjects();
   }, []);
+
+
   return (
     <>
       <div className="sticky-top">

@@ -4,7 +4,6 @@ import { Container } from "react-bootstrap";
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
 import { Link } from "react-router-dom";
-import RazorPay from "../../CommonComponents/RazorPay/RazorPay";
 
 function PaymentHistory() {
   // NAV OBJECT
@@ -20,11 +19,10 @@ function PaymentHistory() {
 
   //STATE
   const [paymentHistory, setPaymentHistory] = useState({});
-  // console.log("payment", paymentHistory);
+  console.log(paymentHistory);
 
   //   GET PAYMENT HISTORY FUNCTION
   const getPaymentHistory = async () => {
-    // console.log("first");
     try {
       let url = `${endpoints.PAYMENT_HISTORY}`;
       let apiResponse = await getPayment(url);

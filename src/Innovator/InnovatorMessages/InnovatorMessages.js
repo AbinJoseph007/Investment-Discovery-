@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./InnovatorMessages.css";
-import { Form, useSearchParams } from "react-router-dom";
+import { Form, Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -12,6 +12,7 @@ import Header from "../../CommonComponents/Header/Header";
 import { endpoints } from "../../services/defaults";
 import useApi from "../../hooks/useApi";
 import MessageBubble from "../../CommonComponents/MessageBubble/MessageBubble";
+import { CiVideoOn } from "react-icons/ci";
 
 function InnovatorMessages() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -192,6 +193,11 @@ function InnovatorMessages() {
     handleGetMessageList();
   }, []);
 
+  const navigate = useNavigate();
+  const navToVideoCall = () => {
+    navigate(`/videocall`);
+  };
+
   return (
     <>
       <div className="sticky-top">
@@ -200,7 +206,16 @@ function InnovatorMessages() {
       <>
         <div className="msg-grid  bg-dark border  border-dark ">
           <div className="msg-left bg-dark my-3 me-1">
-            <h3 className="text-light ps-2">Contacts</h3>
+            <div className="d-flex justify-content-between">
+              <h3 className="text-light ps-2">Contacts</h3>
+              <button
+                className="btn btn-outline-light"
+                onClick={navToVideoCall}
+              >
+                <CiVideoOn className="fs-4" />
+              </button>
+            </div>
+
             {messageList?.length > 0 ? (
               <ListGroup data-bs-theme="dark" className="rounded-0">
                 {messageList.map((i) => (
@@ -248,7 +263,7 @@ function InnovatorMessages() {
               )}
             </div>
 
-            <div className="msg-input-box w-100">
+            <div className="msg-input-box" style={{ width: "68vw" }}>
               <InputGroup
                 className="rounded-4"
                 style={{ position: "sticky", bottom: "0" }}

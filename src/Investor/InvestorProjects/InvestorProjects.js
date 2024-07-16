@@ -14,7 +14,6 @@ import {
 } from "react-bootstrap";
 import "./InvestorProject.css";
 import { Link } from "react-router-dom";
-import Footer from "../../CommonComponents/Footer/Footer";
 import useApi from "../../hooks/useApi";
 import { endpoints } from "../../services/defaults";
 import Header from "../../CommonComponents/Header/Header";
@@ -25,6 +24,7 @@ function InvestorProjects() {
   const [search, setSearch] = useState("");
   const [filterList, setFilterList] = useState([]);
 
+  //GET ALL PROJECTS
   const getAllProjects = async () => {
     try {
       const url = `${endpoints.GET_PROJECTS}`;
@@ -32,16 +32,13 @@ function InvestorProjects() {
       const { response, error } = apiResponse;
       if (!error && response) {
         setAllProject(response.data);
-        console.log(response.data);
-        console.log(allProject);
       }
     } catch (error) {
       console.error("Failed to fetch projects", error);
     }
   };
-
+  //SEARCH
   const handleSearch = () => {
-    console.log("search");
     if (search === "") {
       setFilterList(allProject);
     } else {
@@ -92,9 +89,7 @@ function InvestorProjects() {
                         <h3 className="project-title bg-white py-3 text-center mx-auto">
                           {project.project_name}
                         </h3>
-                        <Card.Text>           
-                          {project.description}
-                        </Card.Text>
+                        <Card.Text>{project.description}</Card.Text>
                         <ProgressBar
                           variant="success"
                           className="striped"

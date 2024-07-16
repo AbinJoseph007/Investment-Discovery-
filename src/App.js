@@ -18,6 +18,8 @@ import PaymentHistory from "./Investor/paymentHistory/PaymentHistory";
 import InvestorMessages from "./Investor/InvestorMessages/InvestorMessages";
 import Meetinvestors from "./Innovator/MeetInvestors.js/Meetinvestors";
 import InvestorProfilePage from "./Innovator/MeetInvestors.js/InvestorProfilePage";
+import VideoCall from "./Innovator/InnovatorMessages/VideoCall";
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path="/allProjects" element={<InvestorProjects />}></Route>
         <Route path="/profile" element={<InnovatorProfile />}></Route>
         <Route path="/aboutus" element={<About />}></Route>
+        <Route path="/videocall" element={<VideoCall />}></Route>
 
         {/* Innovator */}
         <Route path="/profile-edit" element={<InnovatorProfileEdit />}></Route>

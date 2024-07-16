@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import "./InvestorProject.css";
 import { Link, useParams } from "react-router-dom";
-import Footer from "../../CommonComponents/Footer/Footer";
 import Header from "../../CommonComponents/Header/Header";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { endpoints } from "../../services/defaults";
@@ -221,8 +220,7 @@ function InvestorProjectView() {
     getProfile();
   }, [id]);
 
-  // console.log(project);
-
+  //NAVOBJECT
   const navObj = [
     { text: "Dashboard", link: "/investor/home" },
     { text: "My Projects", link: "/investor/projects" },

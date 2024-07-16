@@ -24,13 +24,14 @@
     resize: none;
     text-wrap: wrap;
     /* border-top-left-radius: 20px !important; */
-    padding: 20px;
+    /* padding: 20px; */
   }
   .msg-input-box{
     /* position: absolute; */
     bottom:2%;
     /* top:90%; */
     height: 50px;
+
     box-sizing: border-box;
   }
   .msg-input-box .btn{

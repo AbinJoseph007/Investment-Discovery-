@@ -1,4 +1,3 @@
-import { Box, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -29,24 +28,24 @@ export const InvestorHome = () => {
     { text: "Messages", link: "/investor/messages" },
   ];
 
+  //GET ALL PROJECTS
   const getAllProjects = async () => {
     try {
       let apiResponse;
       const url = `${endpoints.GET_PROJECTS}`;
       apiResponse = await getProjects(url);
       const { response, error } = apiResponse;
-      // console.log(apiResponse);
       if (!error && response) {
         setProject(response.data);
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
+  //SEARCH
   const handleSearch = () => {
-    console.log("search");
     if (search === "") {
       setFilterList(projects);
     } else {

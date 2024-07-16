@@ -16,7 +16,6 @@ function Meetinvestors() {
 
   const { request: getInvestors } = useApi("get");
   const [investorList, setInvestorList] = useState([]);
-  console.log(investorList);
   const getAllInvestors = async () => {
     try {
       let url = `${endpoints.GET_ALL_INVESTORS}`;

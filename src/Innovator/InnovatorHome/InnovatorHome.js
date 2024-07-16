@@ -16,7 +16,6 @@ import useApi from "../../hooks/useApi";
 import CreatableSelect from "react-select/creatable";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Avatar, AvatarGroup } from "@mui/material";
 
 function InnovatorHome() {
   const navObj = [
