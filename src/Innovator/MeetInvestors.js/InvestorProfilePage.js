@@ -8,6 +8,12 @@ import useApi from "../../hooks/useApi";
 import "./InvestorProfile.css";
 
 function InvestorProfilePage({ investor }) {
+  const emailAddress = investor.email;
+
+  function handleEmail() {
+    window.location.href = `mailto:${emailAddress}`;
+  }
+
   return (
     <div>
       <div class="container mt-2 mb-2 d-flex">
@@ -39,6 +45,13 @@ function InvestorProfilePage({ investor }) {
                 {investor.mobile}
                 <br />
               </span>
+              <a
+                href={`mailto:${emailAddress}`}
+                className="btn btn-light"
+                onClick={handleEmail}
+              >
+                Send Email
+              </a>
             </div>
           </div>
         </div>
