@@ -103,14 +103,6 @@ export const InvestorHome = () => {
                         <Card.Text style={{ textAlign: "justify" }}>
                           {project.description.slice(0, 100) + "..."}
                         </Card.Text>
-                        <ProgressBar
-                          variant="success"
-                          className="striped"
-                          now={(project.amount_raised / project.amount) * 100}
-                          label={`₹${project.amount_raised}`}
-                          title={`₹${project.amount_raised} / ₹${project.amount}`}
-                          data-bs-theme="dark"
-                        />
                         <small>Target: ₹{project.amount}</small>
                         <div className="text-end">
                           <Link to={`/investor/project/${project.id}`}>

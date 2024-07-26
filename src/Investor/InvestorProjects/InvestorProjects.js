@@ -90,14 +90,6 @@ function InvestorProjects() {
                           {project.project_name}
                         </h3>
                         <Card.Text>{project.description}</Card.Text>
-                        <ProgressBar
-                          variant="success"
-                          className="striped"
-                          now={(project.amount / project.amount) * 100}
-                          label={`₹${project.AmountRaised}`}
-                          title={`₹${project.AmountRaised} / ₹${project.amount}`}
-                          data-bs-theme="dark"
-                        />
                         <small>Target: ₹{project.amount}</small>
                         <div className="text-end">
                           <Link to={`/projectview/${project.id}`}>

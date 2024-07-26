@@ -291,17 +291,8 @@ function InnovatorProjects() {
                         {project.project_name}
                       </h3>
                       <Card.Text style={{ textAlign: "justify" }}>
-                        {project.description.slice(0, 100) + "..."}
+                        <h4>{project.description.slice(0, 100)}</h4>
                       </Card.Text>
-                      <ProgressBar
-                        variant="success"
-                        className="striped"
-                        now={(project.amount_raised / project.amount) * 100}
-                        label={`₹${project.amount_raised}`}
-                        title={`₹${project.amount_raised} / ₹${project.amount}`}
-                        data-bs-theme="dark"
-                      />
-                      <small>Target: ₹{project.amount}</small>
                       <div className="text-end">
                         <Link to={`/projectview/${project.id}`}>
                           <Button variant="outline-dark rounded-0 ms-auto">

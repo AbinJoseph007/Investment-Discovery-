@@ -33,7 +33,7 @@ function InvestorProjectView() {
     full_name: "",
     account_no: "",
     mobile_number: "",
-    amount: 0,
+    rate: 0,
   });
   const [investorMessage, setInvestorMessage] = useState("");
 
@@ -142,7 +142,7 @@ function InvestorProjectView() {
           full_name: "",
           account_no: "",
           mobile_number: "",
-          amount: 0,
+          rate: 0,
         });
         payment();
         setShow(false);
@@ -227,6 +227,17 @@ function InvestorProjectView() {
     { text: "Payments", link: "/investor/payments" },
     { text: "Messages", link: "/investor/messages" },
   ];
+
+  function getMonthsDifference(date1, date2) {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    const yearsDifference = d2.getFullYear() - d1.getFullYear();
+    const monthsDifference = d2.getMonth() - d1.getMonth();
+
+    return yearsDifference * 12 + monthsDifference;
+  }
+
   return (
     <>
       <div className="sticky-top">
@@ -278,7 +289,11 @@ function InvestorProjectView() {
                         <b>Description: </b>
                         {project.description}
                         <p className="mt-2">
-                          <b>Deadline:</b> {project.end_date || "N/A"}
+                          <b>Deadline:</b>{" "}
+                          {getMonthsDifference(
+                            project.date,
+                            project.end_date
+                          ) || "N/A"}
                         </p>
                       </div>
                       <div className="fw-bold mt-3 px-3">
@@ -385,9 +400,9 @@ function InvestorProjectView() {
                 <input
                   className="form-control mb-3"
                   type="text"
-                  placeholder="Amount"
+                  placeholder="rate"
                   onChange={(e) =>
-                    setInvestInput({ ...investInput, amount: e.target.value })
+                    setInvestInput({ ...investInput, rate: e.target.value })
                   }
                 />
               </Modal.Body>

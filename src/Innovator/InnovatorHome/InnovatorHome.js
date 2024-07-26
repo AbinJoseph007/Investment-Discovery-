@@ -198,16 +198,10 @@ function InnovatorHome() {
               </button>
             </Col>
 
-            <Col className="home-card text-center ">
-              <h4 className="mt-4">No Of Projects</h4>
-
-              <h6>{innovatorProjects.length}</h6>
-            </Col>
-            <Col className="home-card text-center">
-              <h4 className="mt-4">No Of Investors</h4>
-
-              <h6>2</h6>
-            </Col>
+            {/* <Col className="home-card text-center ">
+              <h4 className="">{innovatorProjects.length}</h4>
+              <h4 className="">Number of Projects</h4>
+            </Col> */}
           </Row>
 
           {/* PROJECT LIST */}

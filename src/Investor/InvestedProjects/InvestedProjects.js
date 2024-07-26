@@ -70,14 +70,14 @@ function InvestedProjects() {
                   </small>
 
                   <div className="text-end">
-                    <Link to={`/investor/project/${item.id}`}>
+                    {/* <Link to={`/investor/project/${item.id}`}>
                       <Button
                         variant="outline-dark rounded-0"
                         className="ms-auto "
                       >
                         <i className="fa-solid fa-arrow-right"></i>
                       </Button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </Card.Body>
               </Card>

@@ -45,19 +45,31 @@ function PaymentHistory() {
       <Container className="py-5">
         <h3>Payment History</h3>
         {paymentHistory?.length > 0 ? (
-          <table>
+          <table className="w-100 text-center">
             <thead>
-              <tr>
-                <th className="pe-5">Project</th>
-                <th className="pe-5">Amount</th>
+              <tr
+                className="mb-4"
+                style={{
+                  borderBottom: " 1px solid silver",
+                  backgroundColor: "silver",
+                }}
+              >
+                <th>Project</th>
+                <th>Project Name</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
               {paymentHistory.map((item, index) => (
-                <tr key={index}>
-                  <Link to={`/investor/project/${item.project}`}>
-                    <td c>{item.project}</td>
-                  </Link>
+                <tr
+                  key={index}
+                  style={{
+                    borderBottom: " 1px solid silver",
+                    backgroundColor: "lightgrey",
+                  }}
+                >
+                  <td>{item.project}</td>
+                  <td>{item.project_name}</td>
                   <td className="pe-5">₹{item.amount}</td>
                 </tr>
               ))}

@@ -21,6 +21,7 @@ import { MdOutlineUpdate } from "react-icons/md";
 
 function ProjectView() {
   const [project, setProject] = useState(null);
+  console.log(project);
   const { request: projectview } = useApi("get");
   const { id } = useParams();
   const { request: UpdateProject } = useApi("post");
@@ -203,7 +204,7 @@ function ProjectView() {
                       <b>Description: </b>
                       {project.description}
                       <p className="mt-2">
-                        <b>Deadline:</b> {project.end_date || "N/A"}
+                        <b>Duration:</b> {project.end_date || "N/A"}
                       </p>
                     </div>
                     <div className="fw-bold mt-3 px-3">

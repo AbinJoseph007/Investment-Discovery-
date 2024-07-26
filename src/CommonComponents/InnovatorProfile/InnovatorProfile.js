@@ -5,10 +5,19 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { endpoints } from "../../services/defaults";
+import { Container } from "react-bootstrap";
+import Header from "../Header/Header";
 
 function InnovatorProfile() {
   const { request: profileView } = useApi("hget");
   const [profile, setProfile] = useState(null);
+
+  const navObj = [
+    { text: "Dashboard", link: "/investor/home" },
+    { text: "My Projects", link: "/investor/projects" },
+    { text: "Payments", link: "/investor/payments" },
+    { text: "Messages", link: "/investor/messages" },
+  ];
 
   // get profile
   const getProfile = async () => {
@@ -34,72 +43,71 @@ function InnovatorProfile() {
 
   return (
     <div className="profile-body ">
-      <div className="box"></div>
-      <Row className="profile container w-100">
-        <Col
-          lg={4}
-          className="  d-flex align-item-center justify-content-center"
-        >
-          <div>
-            <img
-              className="Profile-Img"
-              src={
-                profile?.profile_pic
-                  ? `http://127.0.0.1:8000/${profile.profile_pic}`
-                  : "https://i.postimg.cc/rmJJBbDx/istockphoto-1332100919-612x612.jpg"
-              }
-              alt=""
-            />
-                <Link
-                  to={"/profile-edit"}
-                  style={{ textDecoration: "none" }}
-                >
+      <Header navObj={navObj} />
+      <Container>
+        <Row className="profile container w-100">
+          <Col
+            lg={4}
+            className="  d-flex align-item-center justify-content-center"
+          >
+            <div>
+              <img
+                className="Profile-Img"
+                src={
+                  profile?.profile_pic
+                    ? `http://127.0.0.1:8000/${profile.profile_pic}`
+                    : "https://i.postimg.cc/rmJJBbDx/istockphoto-1332100919-612x612.jpg"
+                }
+                alt=""
+              />
+              {/* <Link to={"/profile-edit"} style={{ textDecoration: "none" }}>
                 <div className="text-center">
-
-                <div className="mb-6 ">
-
-                  <i  class="fa-solid fa-pen text-dark "></i>
+                  <div className="mb-6 ">
+                    <i class="fa-solid fa-pen text-dark "></i>
+                  </div>
                 </div>
+              </Link> */}
+            </div>{" "}
+          </Col>
+
+          <Col lg={8} className="details">
+            <Row className="">
+              <Col lg={9} className="">
+                <h1 style={{ textTransform: "capitalize" }}>
+                  {profile ? profile.full_name : "Full Name"}
+                </h1>
+                <span className="ms-2">
+                  <i class="fa-solid fa-location-dot"></i> {profile?.Location}
+                </span>
+                <span className="ms-2">
+                  <Link to={"/profile-edit"} style={{ textDecoration: "none" }}>
+                    <button className="btn btn-outline-dark">
+                      {" "}
+                      <i class="fa-solid fa-pen text-dark "></i>
+                      Edit Profile
+                    </button>
+                  </Link>
+                </span>
+              </Col>
+              <Col lg={3} className="align-item-center justify-content-center ">
+                <div className="fs-3 d-flex mt-2 social-media-icons ">
+                  <a href={profile?.instagram}>
+                    {" "}
+                    <i class="fa-brands fa-instagram"></i>
+                  </a>
+                  <a href={profile?.twitter} style={{ color: "black" }}>
+                    <i class="fa-brands fa-square-x-twitter ms-4"></i>
+                  </a>
+                  <a href={profile?.linkedin} style={{ color: "black" }}>
+                    {" "}
+                    <i class="fa-brands fa-linkedin ms-4"></i>
+                  </a>
+                  <a href={profile?.web} style={{ color: "black" }}>
+                    {" "}
+                    <i class="fa-solid fa-link ms-4"></i>
+                  </a>
                 </div>
-                  
-                </Link>
-             
-          </div>{" "}
-         
-        </Col>
-        
-        <Col lg={8} className="details">
-          <Row className="">
-            <Col lg={9} className="">
-              <h1 style={{ textTransform: "capitalize" }}>
-                {profile ? profile.full_name : "Full Name"}
-              </h1>
-              <h5>
-                {profile?.designation ? profile?.designation : "Designation"}
-              </h5>
-              <p>
-                <i class="fa-solid fa-location-dot"></i> {profile?.Location}
-              </p>
-            </Col>
-            <Col lg={3} className="align-item-center justify-content-center ">
-              <div className="fs-3 d-flex mt-2 social-media-icons ">
-                <a href={profile?.instagram}>
-                  {" "}
-                  <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href={profile?.twitter} style={{ color: "black" }}>
-                  <i class="fa-brands fa-square-x-twitter ms-4"></i>
-                </a>
-                <a href={profile?.linkedin} style={{ color: "black" }}>
-                  {" "}
-                  <i class="fa-brands fa-linkedin ms-4"></i>
-                </a>
-                <a href={profile?.web} style={{ color: "black" }}>
-                  {" "}
-                  <i class="fa-solid fa-link ms-4"></i>
-                </a>
-              </div>
-              {/* <div className="text-center mt-4 d-flex">
+                {/* <div className="text-center mt-4 d-flex">
                 <Link
                   to={"/innovator/profile-edit"}
                   style={{ textDecoration: "none" }}
@@ -109,33 +117,26 @@ function InnovatorProfile() {
                   </button>
                 </Link>
               </div> */}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+
+      <Container className="text-center">
+        {" "}
+        <span className="about-head ms-2">{profile?.proff_bio}</span>
+      </Container>
 
       <div className="about container w-100 mt-4">
-        <span className="about-head">
-          <h3>Professional Bio{"   "}</h3>
-        </span>
-        <p>
-          {/* Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis
-          provident quasi dolore? Voluptatum nihil cum minus rerum, itaque
-          maiores libero perspiciatis numquam at iste consequatur optio sequi et
-          facere quae. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Hic obcaecati temporibus quidem excepturi officiis possimus
-          necessitatibus numquam distinctio incidunt, iusto cumque deleniti
-          dicta, odio cupiditate libero ea magnam enim quisquam. Lorem ipsum
-          dolor sit amet consectetur adipisicing elit. Voluptates aliquid,
-          cumque sapiente libero quas blanditiis fugit minus fuga ea officiis
-          facilis earum, iusto iste reiciendis aut fugiat voluptas doloremque
-          id! */}
-          {profile?.proff_bio}
-        </p>
-        <Row className="mt-4">
+        <Row className="mt-4 text-center">
           <Col>
+            {/* <span className="about-head">
+              <h4>Professional Bio{"   "}</h4>
+            </span>
+            <p>{profile?.proff_bio}</p> */}
             <span className="about-head">
-              <h3>Contact{"   "}</h3>
+              <h4 className="mb-3">Contact{"   "}</h4>
             </span>
 
             <p>
@@ -150,8 +151,11 @@ function InnovatorProfile() {
           </Col>
           <Col>
             <span className="about-head">
-              <h3>Basic Details{"   "}</h3>
+              <h4 className="mb-3">Basic Details{"   "}</h4>
             </span>
+            <p>
+              Designation :<b> {profile?.designation} </b>
+            </p>
             <p>
               Date Of Birth :<b> {profile?.dob} </b>
             </p>
